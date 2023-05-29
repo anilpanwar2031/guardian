@@ -1,0 +1,38 @@
+{
+    "EFTPatients": [
+        {
+            "TIN": "854364176",
+            "ProductionDateOfDocument": "04-27-2023",
+            "DocumentID": "1082829557",
+            "Payor": "UnitedConcordia",
+            "PaymentAmount": "$ 319.00",
+            "Settlement": "2023-04-27",
+            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/United%20Concordia/08D8V44T4V/8a7f3sd254221edssd/API_%20EPP.pdf"
+        }
+    ],
+    "PpEobClaimMaster": [
+        {
+            "ClaimNo": "23117298559",
+            "PatientAccountNumber": "119783511",
+            "Insured": "MOORE II, CHRISTOPHER",
+            "Patient": "MOORE, CORALINE",
+            "CertificateNo": "114213649001",
+            "GroupId": "00002",
+            "CheckNo": "202305020020799500490300032002700201penv",
+            "AmtPaid": "$ 167.83",
+            "ServiceDate": "04-27-2023",
+            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/United%20Concordia/MZCT7RP17Q/8a7f3sd254221edssd/API_%20EPP%20%281%29.pdf"
+        },
+        {
+            "ClaimNo": "23117298560",
+            "PatientAccountNumber": "119783520",
+            "Insured": "MOORE II, CHRISTOPHER",
+            "Patient": "MOORE, TOBIAS",
+            "CertificateNo": "114213649001",
+            "GroupId": "00002",
+            "CheckNo": "202305020020799500490300032002700201penv",
+            "AmtPaid": "$ 151.17",
+            "ServiceDate": "04-27-2023"
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "Payment Processing": {
+        "AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=sdppcontainerprod;AccountKey=7SC6hilo64DEuvgKGcYGlXQMCD3NvQXkTo172Vi0KooNscITYQMEbeXcs0rEF1uoc7zWR4yExt3j+AStkBUtDA==;EndpointSuffix=core.windows.net",
+        "incomingQueueName": "sd-pp-incoming-prod",
+        "OutgoingQueueName": "sd-pp-response-prod",
+        "connect_str_blob": "DefaultEndpointsProtocol=https;AccountName=sdppcontainerprod;AccountKey=7SC6hilo64DEuvgKGcYGlXQMCD3NvQXkTo172Vi0KooNscITYQMEbeXcs0rEF1uoc7zWR4yExt3j+AStkBUtDA==;EndpointSuffix=core.windows.net",
+        "container_name_blob": "sd-pp-blob-container-response-prod",
+        "sa_name_blob": "sdppcontainerprod",
+        "ApiUrl":"https://sd-scheduler-prod.azurewebsites.net/api/callback-scrapping"
+    }
+
+}

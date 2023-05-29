@@ -1,0 +1,7 @@
+selenium
+flask
+pandas==1.4.3
+azure.storage.queue
+azure.storage.blob
+easyimap
+beautifulsoup4

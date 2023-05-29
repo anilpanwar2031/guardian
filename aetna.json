@@ -1,0 +1,49 @@
+{
+    "InputParameters": {
+        "PayorName": "Aetna",
+        "PayorId": 24,
+        "ClientId": "88b80500-d5a9-4c40-a753-34e43695c69e",
+        "AppName": "Payment Processing",
+        "ScheduleId": 0
+    },
+    "PatientData": [
+        {   
+            "PatientId": "1",
+            "FirstName": "LESLIE",
+            "LastName": "TORRES",
+            "Dob": "2/12/2009",
+            "number": "823093000136383",
+            "InsuranceId": "4321",
+            "EligibilityVerificationId": "44",
+            "ClinicServerId": "swe"
+        }
+    ],
+    "Login": {
+        "Url": "https://www.aetna.com/provweb/",
+        "LoginId": "Bpktech1",
+        "Password": "Changeme1!",
+        "OtpRequired": false,
+        "OtpEmail": "",
+        "OtpEmailPassword": "",
+        "EmailProvierUrl": ""
+    },
+    "Xpaths": [
+        {
+            "XPath": "{\"Xpaths\":[{\"UsernameXpath\":\"//input[@id='index_userName']\",\"PasswordXpath\":\"//input[@id='index_password']\",\"LoginButtonXpath\":\"//*[@name='submit']\",\"OtpInputXpath\":\"\",\"OtpSubmitXpath\":\"\",\"OtpXpath\":\"\",\"PreSteps\":[],\"PostSteps\":[\"//*[@value='Continue']\"],\"AdditionalInfo\":{\"IsCaptchaRequired\":true,\"AfterloginCaptcha\":true}}]}",
+            "DataContextName": "EligibilityLogin",
+            "IsActive": true
+        },
+        {
+            "DataContextId": 177,
+            "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"EFTCheckNumber\"},\"xpath\":\"//td[contains(text(),'%s')]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"tinpin\"},\"xpath\":\"//span[contains(text(), 'TIN:')]/parent::td\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"PaidProviderName\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td[3]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"ProviderID\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td[4]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"EobDate\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td[2]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"EftSettlementDate\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td[6]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalAmount\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td[7]!@number\"},{\"AdditonalInfo\":{\"Click\":[\"//td[contains(text(),'%s')]/parent::tr/td/a!@number\"],\"fileds\":[]},\"xpath\":\"//td/td/tr[@id='AaBb']\"}]}",
+            "DataContextName": "PpEobClaimMaster",
+            "IsActive": true
+        }
+        
+    ],
+    "SearchParameters": [
+        {
+            "JsonSettings": "{\"Search\":{\"Settings\":{\"PreSteps\":{\"Clicks\":[\"//*[@id='menuItem-4']/a\",\"//*[@id='submenu-4']/div[2]/div[1]/div/ul/li[2]/div/a\",\"//a[@href='provwebFunctionSelect.do?functionID=EOBSearch']\",\"//img[@name='paymentSearch']\"],\"AdditonalInfo\":{}},\"SearchButtonXpath\":\"//input[@name='submit1']\",\"PostSteps\":{\"Clicks\":[],\"AdditonalInfo\":{\"aftersleep\":5}}},\"Queries\":[{\"Data\":\"number\",\"Xpath\":\"//input[@name='ckEFT1']\"}]}}"
+        }
+    ]
+}

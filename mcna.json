@@ -1,0 +1,73 @@
+{
+    "InputParameters": {
+        "PayorName": "Managed Care of North America- MCNA",
+        "PayorId": 61,
+        "ClientId": "88b80500-d5a9-4c40-a753-34e43695c69e",
+        "AppName": "Payment Processing",
+        "ScheduleId": 0
+    },
+    "PatientData": [
+        {
+            "number": "3841850",
+            "FromDate": "05/01/2023",
+            "ToDate":"05/10/2023",
+            "EligibilityVerificationId": 42,
+            "PMSMasterId": null,
+            "ClinicServerId": "f3c5f1df-1d70-180c-246e-b579dc2aac89",
+            "PPGridViewId": 6,
+            "PayorId": 61,
+            "AppName": "Payment Processing",
+            "PPTransPayorListID": "edbf970b-ffca-4cdd-aacd-29f18de1704e",
+            "PayorName": null
+        }
+    ],
+    "Login": {
+        "Url": "https://portal.mcna.net/login/index",
+        "LoginId": "payorportal@sdbmail.com",
+        "Password": "BPKtech@123",
+        "OtpRequired": false,
+        "OtpEmail": "TODO",
+        "AdditionalInfo":{"AfterCredentialsCaptcha":true,"IsCaptchaRequired":true}
+    },
+    "Xpaths": [
+        {
+            "Id": 221,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 61,
+            "DataContextId": 196,
+            "XPath":"{\"Click\":null,\"Xpaths\":[{\"UsernameXpath\":\"//input[@id='loginUsername']\",\"PasswordXpath\":\"//input[@type='password']\",\"LoginButtonXpath\":\"//input[@id='loginButton']\",\"PreSteps\":[],\"PostSteps\":[],\"OtpInputXpath\":\"\",\"OtpSubmitXpath\":\"\",\"OtpXpath\":\"\",\"AdditionalInfo\":{\"Script\":{\"AfterPageLoad\":{\"js\":\"document.querySelector('#loginUsername').setAttribute('class','act');document.querySelector('#loginPassword').setAttribute('style','display: block;');document.querySelector('#loginPasswordPlain').setAttribute('style','display: none')\"}},\"IsCaptchaRequired\":true,\"AfterCredentialsCaptcha\":true}}]}",
+            "IsActive": true,
+            "DataContextName": "EligibilityLogin",
+            "ProductCategoryId": 6
+        },
+        {
+            "Id": 222,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 61,
+            "DataContextId": 206,
+            "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":null,\"fileds\":\"CheckNumber\"},\"headingname\":\"EFTDetails\",\"xpath\":\"//tr//td[contains(text(),'%s')]!@number\"},{\"AdditonalInfo\":{\"Click\":[\"//tr//td[contains(text(),'%s')]/parent::tr//td//a[contains(text(), 'Download Copy')]!@number\"],\"fileds\":\"Download\"},\"xpath\":\"//tr//td[contains(text(),'%s')]/parent::tr//td//a[contains(text(), 'Download Copy')]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"EFTCheckDate\"},\"xpath\":\"//tr//td[contains(text(),'%s')]/parent::tr//td[2]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":[]},\"xpath\":\"//bolotararaa\"}]}",
+            "IsActive": true,
+            "DataContextName": "EFTPatients",
+            "ProductCategoryId": 6
+        },
+        {
+            "Id": 222,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 61,
+            "DataContextId": 206,
+            "XPath": "{\"Scraping\":false,\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":[\"//img[@id='nav_home']\"],\"fileds\":[]},\"xpath\":\"\"}]}",
+            "IsActive": true,
+            "DataContextName": "SearchDashboardFilter",
+            "ProductCategoryId": 6
+        }
+    ],
+    "SearchParameters": [
+        {
+            "Id": 52,
+            "EligibilityPayorInfoId": 61,
+            "JsonSettings": "{\"Search\":{\"Settings\":{\"PreSteps\":{\"AdditonalInfo\":{},\"Clicks\":[\"//a[@id='search_ra']\"]},\"SearchButtonXpath\":\"//input[@id='searchButton']\",\"SearchFilter\":{},\"PostSteps\":{\"AdditonalInfo\":{\"script\":{\"js\":\"trs=[];let ls =document.querySelectorAll('.ep');let lastpage = 10; console.log(lastpage);for (let index = 0; index < lastpage; index++) {document.querySelector('.next').click();let table =document.querySelector('.searchResults').querySelectorAll('tr');table.forEach((ele)=>{trs.push(ele)})};let table =document.querySelector('.searchResults');trs.forEach((ele)=>{table.appendChild(ele)})\",\"arg1\":\"\",\"arg2\":\"\"},\"sleep\":20},\"Clicks\":[\"//tr//td[contains(text(),'%s')]!@number\"]}},\"Queries\":[{\"Data\":\"FromDate\",\"Xpath\":\"//input[@id='receivedFrom']\",\"AdditonalInfo\":{}},{\"Data\":\"ToDate\",\"Xpath\":\"//input[@id='receivedTo']\",\"AdditonalInfo\":{}}]}}",
+            "IsActive": true,
+            "ProductCategoryId": 6
+        }
+    ]
+}

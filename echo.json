@@ -1,0 +1,64 @@
+{
+    "InputParameters": {
+        "PayorName": "United Concordia",
+        "PayorId": 0,
+        "ClientId": "88b80500-d5a9-4c40-a753-34e43695c69e",
+        "AppName": "Payment Processing",
+        "ScheduleId": 0
+    },
+    "PatientData": [
+        {
+            "DocumentID" : "1082829557"
+        }
+    ],
+    "Login": {
+        "Url": "https://www.providerpayments.com/Login.aspx",
+        "LoginId": "BPKBurg",
+        "Password": "Revenue2023$$!**",
+        "OtpRequired": false,
+        "OtpEmail": "",
+        "OtpEmailPassword": "",
+        "EmailProvierUrl": ""
+    },
+    "Xpaths": [
+        {
+            "Id": 16,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 12,
+            "DataContextId": 196,
+            "XPath": "{\"Xpaths\":[{\"UsernameXpath\":\"//input[@class='txtUserName']\",\"PasswordXpath\":\"//input[@class='txtPassword']\",\"LoginButtonXpath\":\"//input[@value='Log In']\",\"OtpInputXpath\":\"//input[@id='MainContent_txtAuthCode']\",\"OtpSubmitXpath\":\"//input[@value='Submit']\",\"PreSteps\":[],\"PostSteps\":[],\"OtpXpath\":\"//h2\",\"OtpRequired\":true,\"OtpInstructions\":{\"OtpEmail\":\"payorportal@sdbmail.com\",\"OtpEamilPassword\":\"\",\"FromEmail\":\"\",\"EmailTitle\":\"Please use the code below to complete your\",\"tenantID\":\"e44873dc-54c1-425a-8c70-6bd6ee571de4\",\"clientID\":\"aa33b5af-9a5a-4cb3-b120-2b831663f414\",\"clientSecret\":\"K.g8Q~W6gjw-xk4IE67XzTeA7X2FIcF2ecoyJcnq\",\"SMTPAddress\":\"\",\"EncryptionType\":\"\",\"ImapType\":\"\",\"OtpWait\":10}}]}",
+            "IsActive": true,
+            "DataContextName": "EligibilityLogin",
+            "ProductCategoryId": 0
+        },
+        {
+            "Id": 20,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 12,
+            "DataContextId": 177,                      
+            "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":null,\"fileds\":\"TIN\"},\"xpath\":\"//table[@id='MainContent_gvParent']/tbody/tr[2]/td[2]\"},{\"AdditonalInfo\":{\"Click\":null,\"fileds\":\"ProductionDateOfDocument\"},\"xpath\":\"//table[@id='MainContent_gvParent']/tbody/tr[2]/td[3]\"},{\"AdditonalInfo\":{\"Click\":null,\"fileds\":\"DocumentID\"},\"xpath\":\"//table[@id='MainContent_gvParent']/tbody/tr[2]/td[4]\"},{\"AdditonalInfo\":{\"Click\":null,\"fileds\":\"Payor\"},\"xpath\":\"//table[@id='MainContent_gvParent']/tbody/tr[2]/td[5]\"},{\"AdditonalInfo\":{\"Click\":null,\"fileds\":\"PaymentAmount\"},\"xpath\":\"//table[@id='MainContent_gvParent']/tbody/tr[2]/td[6]\"},{\"AdditonalInfo\":{\"Click\":[\"//a[text()='EPP']\"],\"fileds\":\"Settlement\"},\"xpath\":\"//table[@id='MainContent_gvParent']/tbody/tr[2]/td[8]\"}]}",
+            "IsActive": true,
+            "DataContextName": "EFTPatients",
+            "ProductCategoryId": 2
+        },
+        {
+            "Id": 20,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 12,
+            "DataContextId": 177,
+            "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":null,\"fileds\":[]},\"xpath\":\"//table[@id='MainContent_gvParent_gvChild_0']\"}]}",
+            "IsActive": true,
+            "DataContextName": "PpEobClaimMaster",
+            "ProductCategoryId": 2
+        }
+    ],
+    "SearchParameters": [
+        {
+            "Id": 2,
+            "EligibilityPayorInfoId": 12,
+            "JsonSettings": "{\"Search\":{\"Settings\":{\"PreSteps\":{\"Clicks\":[\"//a[@id='lnkNewAdvancedSearch']\",\"//select[@id='MainContent_ddlSearchType']\",\"//*[text()='ECHO Draft Number']\"],\"AdditonalInfo\":{\"aftersleep\":1}},\"SearchButtonXpath\":\"//input[@value='Search']\",\"PostSteps\":{\"AdditonalInfo\":{\"aftersleep\":5},\"Clicks\":[\"//a[text()='EPP']\",\"//*[@id='MainContent_gvParent_img1_0']\"]}},\"Queries\":[{\"Data\":\"DocumentID\",\"Xpath\":\"//input[@id='MainContent_txtSearchValue']\"}]}}",
+            "IsActive": true,
+            "ProductCategoryId": 4
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+{
+    "InputParameters": {
+        "PayorName": "Delta Dental Toolkit",
+        "PayorId": 41,
+        "ClientId": "88b80500-d5a9-4c40-a753-34e43695c69e",
+        "AppName": "Payment Processing",
+        "ScheduleId": 0
+    },
+    "PatientData": [
+        {
+            "number": "343247888",
+            "EligibilityVerificationId": 19,
+            "ClinicServerId": "0909f68b-522e-4f3f-b1c9-fd595f59159e",
+            "PPGridViewId": 6,
+            "PayorId": 41,
+            "AppName": "Payment Processing",
+            "PPTransPayorListID": "27e7c674-051c-40ec-b9ef-6c84f3a3dd1d"
+        }
+    ],
+    "Login": {
+        "Url": "https://identity.deltadental.com/provider/ERA_main.jsp?redirect=true",
+        "LoginId": "payoraccess1",
+        "Password": "Changeme1!",
+        "OtpRequired": false,
+        "OtpEmail": "TODO"
+    },
+    "Xpaths": [
+        {
+            "Id": 115,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 41,
+            "DataContextId": 196,
+            "XPath": "{\"Click\":null,\"Xpaths\":[{\"UsernameXpath\":\"//*[@id='usernameInput']\",\"PasswordXpath\":\"//*[@id='passwordInput']\",\"LoginButtonXpath\":\"//*[@id='btn-login']\",\"PreSteps\":[],\"PostSteps\":[],\"OtpInputXpath\":\"\",\"OtpSubmitXpath\":\"\",\"OtpXpath\":\"\"}]}",
+            "IsActive": true,
+            "DataContextName": "EligibilityLogin",
+            "ProductCategoryId": 6
+        },
+        {
+            "Id": 116,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 41,
+            "DataContextId": 206,
+            "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":null,\"fileds\":[]},\"headingname\":\"EFTDetails\",\"xpath\":\"//span[normalize-space(text())='Payer Name']/ancestor::table[1]\"},{\"AdditonalInfo\":{\"Click\":[\"//a[@title='Claim Payment Summary']\"],\"fileds\":[]},\"xpath\":\"//span[normalize-space(text())='Payer Claim ID']/ancestor::table[1]\"}]}",
+            "IsActive": true,
+            "DataContextName": "EFTPatients",
+            "ProductCategoryId": 6
+        },
+        {
+            "Id": 117,
+            "ClientId": null,
+            "EligibilityPayorInfoId": 41,
+            "DataContextId": 207,
+            "XPath": "{\"MultiplElements\":{\"multiple_elements_xpath\":\"//td[@class='action']/span/div/a\",\"multiple_elements_type\":\"HrefBased\",\"action\":\"Click\",\"HrefXpath\":\"//*[@href='%s']\"},\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"Payer\"},\"xpath\":\"//*[contains(text(),'Payer:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"Payee\"},\"xpath\":\"//*[contains(text(),'Payee:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"Contact\"},\"xpath\":\"//*[contains(text(),'Contact:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TIN_NPI\"},\"xpath\":\"//*[contains(text(),'TIN or NPI')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalAmount\"},\"xpath\":\"//*[contains(text(),'Total Amount:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"EFT_CheckDate\"},\"xpath\":\"//*[contains(text(),'EFT/Check Date:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"PaymentMethod\"},\"xpath\":\"//*[contains(text(),'Payment Method:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"EFT_CheckNumber\"},\"xpath\":\"//*[contains(text(),'EFT/Check #:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TransactionIDNumber\"},\"xpath\":\"//*[contains(text(),'Transaction ID#:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"ABATransitRoutingNo\"},\"xpath\":\"//*[contains(text(),'ABA Transit Routing #:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"CheckingAccountNo\"},\"xpath\":\"//*[contains(text(),'Checking Account #:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"FederalTaxID\"},\"xpath\":\"//*[contains(text(),'Federal Tax ID#:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"AdditionalID\"},\"xpath\":\"//*[contains(text(),'Additional ID#:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"ABATransitRoutingNo\"},\"xpath\":\"//*[contains(text(),'ABA Transit Routing #:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"CheckingAccountNo\"},\"xpath\":\"//*[contains(text(),'Checking Account #:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"ProviderClaimID\"},\"xpath\":\"//*[contains(text(),'Provider Claim ID:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"PatientName\"},\"xpath\":\"//*[contains(text(),'Patient Name:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"PayerClaimID\"},\"xpath\":\"//*[contains(text(),'Payer Claim ID:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"SubscriberName\"},\"xpath\":\"//*[contains(text(),'Subscriber Name:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"ClaimStatus\"},\"xpath\":\"//*[contains(text(),'Claim Status:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"SubscriberID\"},\"xpath\":\"//*[contains(text(),'Subscriber ID:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"RenderingProvider\"},\"xpath\":\"//*[contains(text(),'Rendering Provider:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"RenderingProviderID\"},\"xpath\":\"//*[contains(text(),'Rendering Provider ID:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"InsurancePlanType\"},\"xpath\":\"//*[contains(text(),'Insurance Plan Type:')]/parent::td/following-sibling::td[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":[\"ServiceDate\",\"ProcCode\",\"SubmittedCharges\",\"RemarkCodes\",\"ActualAllowed\",\"ContractualObligations\",\"OtherAdjustments\",\"PayerInitiatedReductions\",\"PatientResp\",\"PayableAmount\"],\"type\":\"headless\"},\"headingXpath\":\"//*[contains(text(),'Payer Claim ID:')]/parent::td/following-sibling::td[1]\",\"xpath\":\"//b[text()='TOTALS']/ancestor::table[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalCoverageAmount\"},\"xpath\":\"//td[contains(., 'Coverage Amount')]/following-sibling::td[1][@align='right']\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalSubmittedCharges\"},\"xpath\":\"//tr[td[b[text()='TOTALS']]]/td[2]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalContractualObligations\"},\"xpath\":\"//tr[td[b[text()='TOTALS']]]/td[4]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalOtherAdjustments\"},\"xpath\":\"//tr[td[b[text()='TOTALS']]]/td[5]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalPayerInitiatedReductions\"},\"xpath\":\"//tr[td[b[text()='TOTALS']]]/td[6]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalPatientResp\"},\"xpath\":\"//tr[td[b[text()='TOTALS']]]/td[7]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TotalPayableAmount\"},\"xpath\":\"//tr[td[b[text()='TOTALS']]]/td[8]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"Notes\"},\"xpath\":\"//td[normalize-space()='Adjustments and Remark Codes:']/ancestor::tbody[1]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"TransactionFee\"},\"xpath\":\"//legend[text()=' Provider Adjustments ']//following-sibling::table//tbody/tr/td[5]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":[],\"window_print\":true},\"xpath\":\"\"}]}",
+            "IsActive": true,
+            "DataContextName": "PpEobClaimMaster",
+            "ProductCategoryId": 6
+        }
+    ],
+    "SearchParameters": [
+        {
+            "Id": 10,
+            "EligibilityPayorInfoId": 41,
+            "JsonSettings": "{\"Search\": {\"Settings\": {\"PreSteps\": {\"Clicks\": [\"//*[text()='View Delta Dental ERAs']\"], \"AdditonalInfo\": {\"sleep\": 20, \"script\": {\"js\": \"document.evaluate(arguments[0],document,null,XPathResult.FIRST_ORDERED_NODE_TYPE,null).singleNodeValue?.removeAttribute('target');\", \"arg1\": \"//*[text()='View Delta Dental ERAs']\", \"arg2\": \"\"}}}, \"SearchButtonXpath\": \"//*[text()='Search']\", \"SearchFilter\": {}, \"PostSteps\": {\"Clicks\": [], \"AdditonalInfo\": {\"afterwait\": \"//a[@title='Claim Payment Summary']\"}}}, \"Queries\": [{\"Data\": \"number\", \"Xpath\": \"//*[@placeholder='EFT/Check#']\", \"AdditonalInfo\": {}}]}}",
+            "IsActive": true,
+            "ProductCategoryId": 6
+        }
+    ]
+}

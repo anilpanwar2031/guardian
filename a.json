@@ -1,0 +1,63 @@
+{
+    "Xpaths": [
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "EFTCheckNumber"
+            },
+            "xpath": "//td[contains(text(),'%s')]!@number"
+        },
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "tinpin"
+            },
+            "xpath": "//span[contains(text(), 'TIN:')]/parent::td"
+        },
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "PaidProviderName"
+            },
+            "xpath": "//td[contains(text(),'%s')]/parent::tr/td[3]!@number"
+        },
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "ProviderID"
+            },
+            "xpath": "//td[contains(text(),'%s')]/parent::tr/td[4]!@number"
+        },
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "EobDate"
+            },
+            "xpath": "//td[contains(text(),'%s')]/parent::tr/td[2]!@number"
+        },
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "EftSettlementDate"
+            },
+            "xpath": "//td[contains(text(),'%s')]/parent::tr/td[6]!@number"
+        },
+        {
+            "AdditonalInfo": {
+                "Click": [],
+                "fileds": "TotalAmount"
+            },
+            "xpath": "//td[contains(text(),'%s')]/parent::tr/td[7]!@number"
+        },
+
+        {
+            "AdditonalInfo": {
+                "Click": [
+                    "//td[contains(text(),'%s')]/parent::tr/td/a!@number"
+                ],
+                "fileds": []
+            },
+            "xpath": "//td/td/tr[@id='AaBb']"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "Payment Processing": {
+        "AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=sdppcontainerdevsa;AccountKey=YtCZ1RtrjnZZDL2fhTtL1LIq1vMaXO1DgAjsyrQPJpknW7rTlcN8Pu1E5xaB9+7JjEdE/RbVhbva+ASt5dBvDA==;EndpointSuffix=core.windows.net",
+        "incomingQueueName": "sd-ppclaims-scrapperincoming-que-dev",
+        "OutgoingQueueName": "sd-ppclaims-scrapperoutgoing-que-dev",
+        "connect_str_blob": "DefaultEndpointsProtocol=https;AccountName=sdppcontainerdevsa;AccountKey=YtCZ1RtrjnZZDL2fhTtL1LIq1vMaXO1DgAjsyrQPJpknW7rTlcN8Pu1E5xaB9+7JjEdE/RbVhbva+ASt5dBvDA==;EndpointSuffix=core.windows.net",
+        "container_name_blob": "pp-scrapper-ins-blob",
+        "sa_name_blob": "sdppcontainerdevsa",
+        "ApiUrl":"https://sd-scheduler-dev.azurewebsites.net/job/callback-scrapping",
+        "IMAPTableName": "otphandler",
+        "ErrorQueue":"scarpingerror"
+    }
+
+}
