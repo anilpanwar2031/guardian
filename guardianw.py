@@ -6,7 +6,7 @@ import pdfplumber
 import tika
 from tika import parser
 import pypdfium2 as pdfium
-
+#
 tika.initVM()
 import sys
 import json
