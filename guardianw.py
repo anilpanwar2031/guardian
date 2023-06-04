@@ -1,18 +1,8 @@
-import tabula
-from tabula import read_pdf
-from tabulate import tabulate
-from pypdf import PdfReader
 import pdfplumber
 import tika
-from tika import parser
-import pypdfium2 as pdfium
-#
+
 tika.initVM()
-import sys
-import json
-import logging
-import re
-import zipfile
+
 from pprint import pprint
 
 from Utilities.pdf_utils import *
@@ -20,6 +10,47 @@ from FileDownload import Downloader
 
 import tabula
 import pandas as pd
+from PyPDF2 import PdfReader
+
+
+def getAllTexts(file_path):
+    texts = ' '
+    with open(file_path, 'rb') as file:
+        # Create a PdfReader object
+        pdf = PdfReader(file)
+
+        # Extract text from each page
+        for page in pdf.pages:
+            text = page.extract_text()
+            texts = texts + text + ' '
+    return texts
+
+
+def getRemarks(texts, claimnumber):
+    remarks = ''
+    remarks = texts.split(f"Remarks for claim # {claimnumber}:")[1]
+
+    if '10 Hudson' in remarks:
+        remarks = remarks.split('10 Hudson')[0]
+    else:
+        remarks = remarks.split('Comments:')[0]
+
+    return remarks.replace('\n', ' ').replace("  ", " ").strip()
+
+
+def getBenefit(texts, claimnumber):
+    benefit = texts.split(f"Remarks for claim # {claimnumber}:")[0]
+    benefit_dict = {}
+    if 'Remarks for claim' in benefit:
+        benefit = benefit.split('Remarks for claim')[1]
+
+    benefit_dict['paidbyotherinsu'] = '$' + benefit.split('PAID BY OTHER INSURANCE')[1].split('ADJUSTMENTS')[0].replace('\n', '').split('$')[1]
+    benefit_dict['adj'] = '$' + benefit.split('ADJUSTMENTS')[1].split('TOTAL BENEFIT PAID')[0].replace('\n', '').split('$')[1]
+    benefit_dict['totalbenefitpaid'] = '$' + benefit.split('TOTAL BENEFIT PAID')[1].split('PATIENT')[0].replace('\n', '').split('$')[1]
+    benefit_dict['patientrep'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
+    benefit_dict['toalbenfitpayable'] = benefit.split('PAID BY OTHER INSURANCE')[0].split('\n')[-2].strip()
+    benefit_dict['higherallowable'] = '$' + benefit.split('BENEFIT SUMMARY')[1].split('HIGHER ALLOWABLE')[0].replace('\n', '').split('$')[1].strip()
+    return benefit_dict
 
 
 def process_tabula_address(tabula_df: pd.DataFrame) -> str:
@@ -88,7 +119,7 @@ def get_basic_details(file_path):
     return master_dict
 
 
-def get_master_details(file_path):
+def get_master_details(file_path, texts):
     with pdfplumber.open(file_path) as pdf:
         patients = []
         for page in pdf.pages:
@@ -124,8 +155,12 @@ def get_master_details(file_path):
                         patient_dict['ClaimStatus'] = ''
                         patient_dict['RenderingProvider'] = ''
                         payee_address_details = get_basic_details(file_path)
+                        notes = getRemarks(texts, claimnumber)
                         patient_dict.update(payee_address_details)
                         patient_dict['PayerClaimID'] = claimnumber
+                        patient_dict['Notes'] = notes
+                        benefit = getBenefit(texts, claimnumber)
+                        patient_dict.update(benefit)
                         patients.append((patient_dict))
 
     return patients
@@ -134,7 +169,11 @@ def get_master_details(file_path):
 def main():
     print("main 1")
     file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian11.pdf'
-    claimamster = get_master_details(file_path)
+    texts = getAllTexts(file_path)
+    claimamster = get_master_details(file_path, texts)
+
+
+
 
     return claimamster
 

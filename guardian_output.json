@@ -7,7 +7,7 @@
         "PatientAccount": "15320",
         "TransactionFee": "",
         "url": "",
-        "Notes": "",
+        "Notes": "DISCOUNT THROUGH MAXIMUMCARE NETWORK POWERED BY CAREINGTON & DENTEMAX 3. The dental plan covers fluoride treatment only for covered patients under the age of 14. Benefits are based on the use of a Preferred Contracted Dentist. You have used   $0.00 of your personal Maximum Rollover Account.  $500.00 remains in your account",
         "PayerClaimID": "18472E05500",
         "TotalAmount": "$242.95",
         "ClaimStatus": "",
@@ -26,7 +26,13 @@
         "PayeeZip": "76034-6065",
         "Provider": "JANENE SPERANDEO",
         "EFT_CheckDate": "02/27/23",
-        "EFT_CheckNumber": "186250290"
+        "EFT_CheckNumber": "186250290",
+        "paidbyotherinsu": "$0.00",
+        "adj": "$0.00",
+        "totalbenefitpaid": "$ 103.00",
+        "patientrep": "$56.95",
+        "toalbenfitpayable": "$103.00",
+        "higherallowable": "$103.00"
     },
     {
         "SubscriberID": "",
@@ -36,7 +42,7 @@
         "PatientAccount": "15321",
         "TransactionFee": "",
         "url": "",
-        "Notes": "",
+        "Notes": "DISCOUNT THROUGH MAXIMUMCARE NETWORK POWERED BY CAREINGTON & DENTEMAX Benefits are based on the use of a Preferred Contracted Dentist. You have used   $0.00 of your personal Maximum Rollover Account.  $350.00 remains in your account",
         "PayerClaimID": "18473E05500",
         "TotalAmount": "$242.95",
         "ClaimStatus": "",
@@ -55,6 +61,12 @@
         "PayeeZip": "76034-6065",
         "Provider": "JANENE SPERANDEO",
         "EFT_CheckDate": "02/27/23",
-        "EFT_CheckNumber": "186250290"
+        "EFT_CheckNumber": "186250290",
+        "paidbyotherinsu": "$0.00",
+        "adj": "$0.00",
+        "totalbenefitpaid": "$ 139.95",
+        "patientrep": "$0.00",
+        "toalbenfitpayable": "$139.95",
+        "higherallowable": "$139.95"
     }
 ]
