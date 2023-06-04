@@ -309,6 +309,7 @@ def get_address_list_when_exception(parsed_address):
 
     return address_list
 
+
 def extract_address_details(address_text):
     try:
         address_list = usaddress.tag(address_text)[0]

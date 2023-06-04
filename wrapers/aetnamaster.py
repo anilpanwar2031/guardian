@@ -140,10 +140,10 @@ def change_header_name(dfs_ch_list):
 
 def get_basic_details(filepath):
     tabula_dfs = tabula.read_pdf(filepath,guess=False,pages=1,stream=True,encoding="utf-8",
-        area=[(18, 26, 81, 233), (33,363,172,543), (128,26,193,265)],multiple_tables=True)
-    
+        area =[(18, 26, 81, 233), (33,363,172,543), (128,26,193,265)],multiple_tables=True)
+                 # y1,x1,y2,x2
     add_col = tabula_dfs[0].columns[0]
-    payer_add= f"aetna {add_col} {' '.join(tabula_dfs[0][add_col ].to_list())}"
+    payer_add = f"aetna {add_col} {' '.join(tabula_dfs[0][add_col ].to_list())}"
     
     payer_address_details = extract_address_details(payer_add)
 
@@ -231,7 +231,7 @@ def get_master_details(texts, file_path, url, tables, totalamount, eftsettlement
                 provider_name = provider_ele[x+1].split('\n')[0].strip().split('$')[0]
                 patient_dict['Provider'] = provider_name.strip()
                 patient_dict['TransactionFee'] = '$0.00'
-                patient_dict['Url'] = url
+                patient_dict['url'] = url
             
                 patient_dict['Notes'] = extract_notes(i, provider_name)
                 my_dict, eftnumber = get_basic_details(file_path)
