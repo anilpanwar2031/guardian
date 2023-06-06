@@ -12,6 +12,17 @@ import tabula
 import pandas as pd
 from PyPDF2 import PdfReader
 
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+import json
+from FileDownload import Downloader
+import random, string
+import tabula
+import sys
+import os
+import uuid
+
 
 def getAllTexts(file_path):
     texts = ' '
@@ -44,13 +55,14 @@ def getBenefit(texts, claimnumber):
     if 'Remarks for claim' in benefit:
         benefit = benefit.split('Remarks for claim')[1]
 
-    benefit_dict['paidbyotherinsu'] = '$' + benefit.split('PAID BY OTHER INSURANCE')[1].split('ADJUSTMENTS')[0].replace('\n', '').split('$')[1]
-    benefit_dict['adj'] = '$' + benefit.split('ADJUSTMENTS')[1].split('TOTAL BENEFIT PAID')[0].replace('\n', '').split('$')[1]
-    benefit_dict['totalbenefitpaid'] = '$' + benefit.split('TOTAL BENEFIT PAID')[1].split('PATIENT')[0].replace('\n', '').split('$')[1]
-    benefit_dict['patientrep'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
-    benefit_dict['toalbenfitpayable'] = benefit.split('PAID BY OTHER INSURANCE')[0].split('\n')[-2].strip()
-    benefit_dict['higherallowable'] = '$' + benefit.split('BENEFIT SUMMARY')[1].split('HIGHER ALLOWABLE')[0].replace('\n', '').split('$')[1].strip()
-    return benefit_dict
+    adjustments = '$' + benefit.split('ADJUSTMENTS')[1].split('TOTAL BENEFIT PAID')[0].replace('\n', '').split('$')[1]
+
+    benefit_dict['PaidByOtherInsurance'] = '$' + benefit.split('PAID BY OTHER INSURANCE')[1].split('ADJUSTMENTS')[0].replace('\n', '').split('$')[1]
+    benefit_dict['TotalBenefitPaid'] = '$' + benefit.split('TOTAL BENEFIT PAID')[1].split('PATIENT')[0].replace('\n', '').split('$')[1]
+    benefit_dict['PatientResp'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
+    benefit_dict['TotalBenfitPayable'] = benefit.split('PAID BY OTHER INSURANCE')[0].split('\n')[-2].strip()
+    benefit_dict['HigherAllowable'] = '$' + benefit.split('BENEFIT SUMMARY')[1].split('HIGHER ALLOWABLE')[0].replace('\n', '').split('$')[1].strip()
+    return benefit_dict, adjustments
 
 
 def process_tabula_address(tabula_df: pd.DataFrame) -> str:
@@ -137,7 +149,7 @@ def get_master_details(file_path, texts):
                         claimnumber = text.split('Claim Number: ')[1].split(' ')[0]
                         patientaccountno = text.split('Patient Account No.:')[1].split(' ')[0]
                         plannumber = text.split('Plan Number:')[1].split(' ')[0]
-                        patientname = text.split('Patient Name: ')[1].split('Employee Name')[0]
+                        patientname = text.split('Patient Name: ')[1].split('Employee Name')[0].strip()
                         employeename = text.split('Employee Name: ')[1].split('Relationship')[0]
                         relationship = text.split('Relationship: ')[1].split('Planholder:')[0].replace('\n', '')
                         planholder = text.split('Planholder: ')[1]
@@ -159,24 +171,284 @@ def get_master_details(file_path, texts):
                         patient_dict.update(payee_address_details)
                         patient_dict['PayerClaimID'] = claimnumber
                         patient_dict['Notes'] = notes
-                        benefit = getBenefit(texts, claimnumber)
+                        benefit, adjustments = getBenefit(texts, claimnumber)
                         patient_dict.update(benefit)
+
+                        patient_dict['PPGridViewId'] = ''
+                        patient_dict['PPTransPayorListID'] = ''
+                        patient_dict['PayeeTaxID'] = ''
+                        patient_dict['PayerContact'] = '(800) 541-7846'
+                        patient_dict['PayerID'] = ''
+                        patient_dict['PaymentMethodCode'] = ''
+                        patient_dict['RecordID'] = ''
+                        patient_dict['RenderingProviderID'] = ''
+
                         patients.append((patient_dict))
 
     return patients
 
 
+def get_details(file_path):
+    dict_list = tabula.read_pdf(file_path, pages='all')
+
+    lst = []
+    for ind, tab in enumerate(dict_list):
+        if any('Claim Number' in col for col in tab.columns):
+            new_columns_name = {}
+            for i in range(len(tab.columns)):
+                a = {}
+                old_name = tab.columns[i]
+                new_name = f'columns{i + 1}'
+                new_columns_name[old_name] = new_name
+                tab = tab.rename(columns=new_columns_name)
+                a['B'] = "ABC"
+                t = tab.to_dict('records')
+                t.update(a)
+            # lst.append(tab.to_dict('records'))
+
+    temp_lst = []
+    for i in range(len(lst)):
+        for obj in lst[i]:
+            if type(obj.get('columns1')) != float:
+                temp_lst.append(obj)
+
+    filtered_lst = []
+    for i in range(len(temp_lst)):
+        t = str(temp_lst[i]['columns2'])
+        temp_lst[i]['columns2'] = t
+        if not temp_lst[i]['columns1'].startswith('Patient Name') and not temp_lst[i]['columns1'].startswith(
+                'Planholder') and not temp_lst[i]['columns1'].startswith('Line Submitted') and not temp_lst[i][
+            'columns1'].startswith('No.'):
+            filtered_lst.append(temp_lst[i])
+    print("filtered_lst>>>>>>>>>>>>>>>>>", filtered_lst)
+
+    new_lst = []
+    new_dict = {}
+    for obj in filtered_lst:
+        columns3 = obj['columns3'].split()
+        print(columns3)
+        columns4 = obj['columns4'].split()
+
+        if 'columns6' in obj:
+            columns6 = str(obj['columns6']).split()
+            columns4 = obj['columns4'].split()
+            if len(columns6) == 3 and len(columns4) == 3:
+                new_dict = {
+                    'SubmittedADACodesDescription': obj["columns1"],
+                    'AltCode': obj["columns2"],
+                    'ToothNo': obj["columns3"],
+                    'DateOfService': columns4[0],
+                    'SubmittedCharge': columns4[1],
+                    'ConsideredCharge': columns4[2],
+                    'CoveredCharge': obj["columns5"],
+                    'DeductibleAmount': columns6[0],
+                    'CoveragePercent': columns6[1],
+                    'BenefitAmount': columns6[2]
+                }
+            elif len(columns6) == 2 and len(columns4) == 3:
+                new_dict = {
+                    'SubmittedADACodesDescription': obj["columns1"],
+                    'AltCode': obj["columns2"],
+                    'ToothNo': obj["columns3"],
+                    'DateOfService': columns4[0],
+                    'SubmittedCharge': columns4[1],
+                    'ConsideredCharge': columns4[2],
+                    'CoveredCharge': obj["columns5"],
+                    'DeductibleAmount': "",
+                    'CoveragePercent': columns6[0],
+                    'BenefitAmount': columns6[1]
+                }
+            elif len(columns6) == 1 and len(columns4) == 4:
+                new_dict = {
+                    'SubmittedADACodesDescription': obj["columns1"],
+                    'AltCode': obj["columns2"],
+                    'ToothNo': obj["columns3"],
+                    'DateOfService': columns4[0],
+                    'SubmittedCharge': columns4[1],
+                    'ConsideredCharge': columns4[2],
+                    'CoveredCharge': columns4[3],
+                    'DeductibleAmount': "",
+                    'CoveragePercent': obj["columns5"],
+                    'BenefitAmount': str(obj["columns6"])
+                }
+        elif len(columns3) == 3:
+            columns2 = obj['columns2'].split()
+            columns4 = obj['columns4'].split()
+            new_dict = {
+                'SubmittedADACodesDescription': obj["columns1"],
+                'AltCode': "",
+                'ToothNo': columns2[0],
+                'DateOfService': columns2[1],
+                'SubmittedCharge': columns3[0],
+                'ConsideredCharge': columns3[1],
+                'CoveredCharge': columns3[2],
+                'DeductibleAmount': "",
+                'CoveragePercent': columns4[0],
+                'BenefitAmount': str(columns4[1])
+            }
+        elif len(obj) == 5:
+            columns5 = obj['columns5'].split()
+            columns2 = ""
+            if obj['columns2'].startswith('nan'):
+                obj['columns2'] = ""
+            else:
+                columns2 = obj['columns2'].split()
+
+            columns4 = obj['columns4'].split()
+            if len(columns3) == 1:
+                new_dict = {
+                    'SubmittedADACodesDescription': obj["columns1"],
+                    'AltCode': "",
+                    'ToothNo': obj['columns3'],
+                    'DateOfService': columns4[0],
+                    'SubmittedCharge': columns4[1],
+                    'ConsideredCharge': columns4[2],
+                    'CoveredCharge': columns4[3],
+                    'DeductibleAmount': "",
+                    'CoveragePercent': columns5[0],
+                    'BenefitAmount': str(columns5[1])
+                }
+                print("new_dict>>>>>>>>>>>>>>>", new_dict)
+
+            elif len(columns5) == 2:
+                new_dict = {
+                    'SubmittedADACodesDescription': obj["columns1"],
+                    'AltCode': "",
+                    'ToothNo': obj['columns2'],
+                    'DateOfService': columns3[0],
+                    'SubmittedCharge': columns3[1],
+                    'ConsideredCharge': columns3[2],
+                    'CoveredCharge': columns3[3],
+                    'DeductibleAmount': "",
+                    'CoveragePercent': columns4[0],
+                    'BenefitAmount': str(columns4[1])
+                }
+                print("new_dict>>>>>>>>>>>>>>>", new_dict)
+
+            elif len(columns5) == 3:
+                new_dict = {
+                    'SubmittedADACodesDescription': obj["columns1"],
+                    'AltCode': "",
+                    'ToothNo': columns2[0],
+                    'DateOfService': columns2[1],
+                    'SubmittedCharge': columns3[0],
+                    'ConsideredCharge': columns3[1],
+                    'CoveredCharge': obj["columns4"],
+                    'DeductibleAmount': columns5[0],
+                    'CoveragePercent': columns5[1],
+                    'BenefitAmount': str(columns5[2])
+                }
+                print("new_dict>>>>>>>>>>>>>>>", new_dict)
+
+
+        else:
+            columns3 = obj['columns3'].split()
+            columns4 = obj['columns4'].split()
+            new_dict = {
+                'SubmittedADACodesDescription': obj["columns1"],
+                'AltCode': "",
+                'ToothNo': obj["columns2"],
+                'DateOfService': columns3[0],
+                'SubmittedCharge': columns3[1],
+                'ConsideredCharge': columns3[2],
+                'CoveredCharge': columns3[3],
+                'DeductibleAmount': "",
+                'CoveragePercent': columns4[0],
+                'BenefitAmount': columns4[1]
+            }
+
+        if str(new_dict['AltCode']) == 'nan':
+            new_dict['AltCode'] = str(new_dict['AltCode']).replace('nan', '')
+        if str(new_dict['ToothNo']) == 'nan':
+            new_dict['ToothNo'] = str(new_dict['ToothNo']).replace('nan', '')
+        new_lst.append(new_dict)
+    print("new_lst>>>>>>>>>>>>>", new_lst)
+    return new_lst
+    # for i in new_lst:
+    #     data['PpEobClaimMaster'].append(i)
+    #
+    # ADACodes = ""
+    # Description = ""
+    # for i in range(len(data['PpEobClaimMaster'])):
+    #     for key, values in data['PpEobClaimMaster'][i].items():
+    #         if key == "SubmittedADACodesDescription":
+    #             cdtcodes_type_of_service = values
+    #             ADACodes, Description = cdtcodes_type_of_service.split("/", 1)
+    #     data['PpEobClaimMaster'][i]["ADACodes"] = ADACodes
+    #     data['PpEobClaimMaster'][i]["Description"] = Description
+    #     # del data['PpEobClaimMaster'][i]["SubmittedADACodesDescription"]
+    #
+    # for obj in data['PpEobClaimMaster']:
+    #     ads_code = obj["ADACodes"].split()
+    #     if len(ads_code) == 2:
+    #         obj["ADACodes"] = ads_code[1]
+    # print("data>>>>>>>>>>>>>>", data)
+    # for obj in data["PpEobClaimMaster"]:
+    #     obj["RecordID"] = str(uuid.uuid4())
+    #
+    # if data.get("PpEobClaimMaster"):
+    #     for obj in data["PpEobClaimMaster"]:
+    #         obj["RecordID"] = str(uuid.uuid4())
+    #
+    # with open("newJson.json", "w") as jsonFile:
+    #     json.dump(data, jsonFile, indent=4)
+
+    return 0
+
+
+def getEftPatients(eobclaimmaster):
+    eftpatientlist = []
+    for p in eobclaimmaster:
+        eftpatient_dict = {
+            "SubscriberID": "",
+            "ProviderClaimId": '',
+            "PayerClaimId": '',
+            "MemberNo": p['PatientAccount'],
+            "RenderingProviderFirstName": p['Provider'].split(' ')[0].strip(),
+            "RenderingProviderLastName": p['Provider'].split(' ')[1].strip(),
+            "PatientName": p['PatientName'],
+            "PlanType": "",
+            "RenderingProviderID": "",
+            "PayerPaid": "",
+            "RecordID": "",
+            "PPTransPayorListID": "",
+            "ClientId": "",
+            "EligibilityVerificationId": "44",
+        }
+        eftpatientlist.append(eftpatient_dict)
+    return eftpatientlist
+
+
+
 def main():
     print("main 1")
-    file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian11.pdf'
+    file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian.pdf'
     texts = getAllTexts(file_path)
-    claimamster = get_master_details(file_path, texts)
+    eobclaimmaster = get_master_details(file_path, texts)
+    eobclaimdetail = get_details(file_path)
+    eftpatients = getEftPatients(eobclaimmaster)
+
+    json_data = {
+        'EFTPatients': eftpatients,
+        'PpEobClaimMaster': eobclaimmaster,
+        'PpEobClaimDetail': eobclaimdetail
+    }
+
+    for i, (claim1, claim2, claim3) in enumerate(zip(
+            json_data["EFTPatients"],
+            json_data["PpEobClaimMaster"],
+            json_data["PpEobClaimDetail"],
+    ),
+            start=1, ):
+        claim1["RecordId"] = i
+        claim2["RecordId"] = i
+        claim3["RecordId"] = i
+
+    return json_data
 
 
-
-
-    return claimamster
-
+# with open("wguardian_output.json", "r") as jsonFile:
+#     data = json.load(jsonFile)
 
 data = main()
 

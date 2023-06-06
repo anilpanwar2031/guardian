@@ -8,11 +8,13 @@
             "EobDate": "04/03/2023",
             "EftSettlementDate": "04/06/2023",
             "TotalAmount": "$2075.00",
-            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Aetna/VF9IQ0AD9H/8a7f3sd254221edssd/YourReport.pdf"
-        }
-    ],
-    "RcmEobClaimDetail": [
+            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Aetna/VF9IQ0AD9H/8a7f3sd254221edssd/YourReport.pdf",
+            "ADACodes": "",
+            "Description": "",
+            "RecordID": "83bd242c-bf9a-45b6-aea6-e82e1dd4bc05"
+        },
         {
+            "SubmittedADACodesDescription": "1 D2392/Pst Composite2",
             "AltCode": "",
             "ToothNo": "T",
             "DateOfService": "05/09/23",
@@ -24,9 +26,10 @@
             "BenefitAmount": "90%",
             "ADACodes": "D2392",
             "Description": "Pst Composite2",
-            "RecordID": "cb37d54e-1ca3-4b06-afb5-7e0b1a3a4804"
+            "RecordID": "fdd00fcc-5b83-4266-b246-89cbde95c375"
         },
         {
+            "SubmittedADACodesDescription": "2 D7140/Extraction",
             "AltCode": "",
             "ToothNo": "S",
             "DateOfService": "05/09/23",
@@ -38,9 +41,10 @@
             "BenefitAmount": "62.10",
             "ADACodes": "D7140",
             "Description": "Extraction",
-            "RecordID": "642a075b-7b37-4ddc-a276-f29092cda146"
+            "RecordID": "adb3f101-3493-45dd-b732-5f3025dda94f"
         },
         {
+            "SubmittedADACodesDescription": "3 D1510/Space Maintain",
             "AltCode": "",
             "ToothNo": "LR",
             "DateOfService": "05/09/23",
@@ -52,9 +56,10 @@
             "BenefitAmount": "134.10",
             "ADACodes": "D1510",
             "Description": "Space Maintain",
-            "RecordID": "d407672f-9e24-4afc-ae79-0182fc43c220"
+            "RecordID": "f04b4d1e-e81d-4150-ae28-176fcbfcc90e"
         },
         {
+            "SubmittedADACodesDescription": "4 D9230/Analgesia/N20",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/09/23",
@@ -66,9 +71,10 @@
             "BenefitAmount": "0.00",
             "ADACodes": "D9230",
             "Description": "Analgesia/N20",
-            "RecordID": "a150fc81-4d83-4a8f-8daf-994c42483467"
+            "RecordID": "17f15630-52e8-46a7-9980-33779ebbfdea"
         },
         {
+            "SubmittedADACodesDescription": "1 D0120/Periodic Eval",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/10/23",
@@ -80,9 +86,10 @@
             "BenefitAmount": "27.00",
             "ADACodes": "D0120",
             "Description": "Periodic Eval",
-            "RecordID": "9d2fadef-0b8a-4428-8ae9-f51fe64ce7b3"
+            "RecordID": "5a457391-20a5-4a03-9d72-8b5ffefe941b"
         },
         {
+            "SubmittedADACodesDescription": "2 D0240/Occlusal Image",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/10/23",
@@ -94,9 +101,10 @@
             "BenefitAmount": "14.00",
             "ADACodes": "D0240",
             "Description": "Occlusal Image",
-            "RecordID": "835c64fb-9db4-4de6-a04c-ee3f87efd7a8"
+            "RecordID": "69550307-845e-4161-b299-a9c9237914f3"
         },
         {
+            "SubmittedADACodesDescription": "3 D0240/Occlusal Image",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/10/23",
@@ -108,9 +116,10 @@
             "BenefitAmount": "14.00",
             "ADACodes": "D0240",
             "Description": "Occlusal Image",
-            "RecordID": "a04f09dc-f1e3-46ad-8167-aa86643075d4"
+            "RecordID": "1399e938-4987-4d74-a187-585d846b020a"
         },
         {
+            "SubmittedADACodesDescription": "4 D1120/Child Cleaning",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/10/23",
@@ -122,9 +131,10 @@
             "BenefitAmount": "39.00",
             "ADACodes": "D1120",
             "Description": "Child Cleaning",
-            "RecordID": "055469d1-9ef2-4919-9c3b-eeb0678f3479"
+            "RecordID": "55f3d55e-39d0-4467-8140-e3d84a8d1e53"
         },
         {
+            "SubmittedADACodesDescription": "5 D1206/Fluoride Varn",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/10/23",
@@ -136,9 +146,10 @@
             "BenefitAmount": "16.00",
             "ADACodes": "D1206",
             "Description": "Fluoride Varn",
-            "RecordID": "3bd92665-a16d-47ff-933e-4a0cc4e8e24a"
+            "RecordID": "9b64e270-9d06-47b5-a29e-f9fc74a95066"
         },
         {
+            "SubmittedADACodesDescription": "6 D0274/Bitewing - 4",
             "AltCode": "",
             "ToothNo": "FM",
             "DateOfService": "05/10/23",
@@ -150,7 +161,7 @@
             "BenefitAmount": "0.00",
             "ADACodes": "D0274",
             "Description": "Bitewing - 4",
-            "RecordID": "c0562914-3be5-4f6b-bc56-bd48a77e22de"
+            "RecordID": "f9dc515c-3f94-4cf7-b4ef-3aaa494ecd1f"
         }
     ]
 }

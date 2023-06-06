@@ -1,44 +1,8 @@
 {
-    "EFTPatients": [
-        {
-            "SubscriberID": "",
-            "ProviderClaimId": "",
-            "PayerClaimId": "",
-            "MemberNo": "120262917",
-            "RenderingProviderFirstName": "DON",
-            "RenderingProviderLastName": "REES",
-            "PatientName": "EDMUND GROVER",
-            "PlanType": "",
-            "RenderingProviderID": "",
-            "PayerPaid": "",
-            "RecordID": "",
-            "PPTransPayorListID": "",
-            "ClientId": "",
-            "EligibilityVerificationId": "44",
-            "RecordId": 1
-        },
-        {
-            "SubscriberID": "",
-            "ProviderClaimId": "",
-            "PayerClaimId": "",
-            "MemberNo": "120320346",
-            "RenderingProviderFirstName": "DON",
-            "RenderingProviderLastName": "REES",
-            "PatientName": "ANDREW CASEY",
-            "PlanType": "",
-            "RenderingProviderID": "",
-            "PayerPaid": "",
-            "RecordID": "",
-            "PPTransPayorListID": "",
-            "ClientId": "",
-            "EligibilityVerificationId": "44",
-            "RecordId": 2
-        }
-    ],
     "PpEobClaimMaster": [
         {
             "SubscriberID": "",
-            "PatientName": "EDMUND GROVER",
+            "PatientName": "EDMUND GROVER ",
             "Relationship": "SON",
             "ClaimId": "36343F13200",
             "PatientAccount": "120262917",
@@ -67,21 +31,20 @@
             "PaidByOtherInsurance": "$0.00",
             "TotalBenefitPaid": "$ 241.20",
             "Patientrep": "$105.80",
-            "TotalBenfitPayable": "$241.20",
-            "HigherAllowable": "$318.00",
+            "toalbenfitpayable": "$241.20",
+            "higherallowable": "$318.00",
             "PPGridViewId": "",
             "PPTransPayorListID": "",
             "PayeeTaxID": "",
             "PayerContact": "(800) 541-7846",
             "PayerID": "",
             "PaymentMethodCode": "",
-            "RecordID": "",
-            "RenderingProviderID": "",
-            "RecordId": 1
+            "RecordID": 1,
+            "RenderingProviderID": ""
         },
         {
             "SubscriberID": "",
-            "PatientName": "ANDREW CASEY",
+            "PatientName": "ANDREW CASEY ",
             "Relationship": "SON",
             "ClaimId": "36347F13200",
             "PatientAccount": "120320346",
@@ -110,17 +73,16 @@
             "PaidByOtherInsurance": "$0.00",
             "TotalBenefitPaid": "$ 110.00",
             "Patientrep": "$30.00",
-            "TotalBenfitPayable": "$110.00",
-            "HigherAllowable": "$110.00",
+            "toalbenfitpayable": "$110.00",
+            "higherallowable": "$110.00",
             "PPGridViewId": "",
             "PPTransPayorListID": "",
             "PayeeTaxID": "",
             "PayerContact": "(800) 541-7846",
             "PayerID": "",
             "PaymentMethodCode": "",
-            "RecordID": "",
-            "RenderingProviderID": "",
-            "RecordId": 2
+            "RecordID": 2,
+            "RenderingProviderID": ""
         }
     ],
     "PpEobClaimDetail": [
@@ -135,7 +97,7 @@
             "DeductibleAmount": "",
             "CoveragePercent": "50.00",
             "BenefitAmount": "90%",
-            "RecordId": 1
+            "RecordID": 1
         },
         {
             "SubmittedADACodesDescription": "2 D7140/Extraction",
@@ -148,7 +110,7 @@
             "DeductibleAmount": "",
             "CoveragePercent": "90%",
             "BenefitAmount": "62.10",
-            "RecordId": 2
+            "RecordID": 2
         },
         {
             "SubmittedADACodesDescription": "3 D1510/Space Maintain",

@@ -56,8 +56,6 @@ def main(data):
         print(columns3)
         columns4 = obj['columns4'].split()
 
-
-
         if 'columns6' in obj:
             columns6 = str(obj['columns6']).split()
             columns4 = obj['columns4'].split()
@@ -225,4 +223,5 @@ def main(data):
 
 with open("output.json", "r") as jsonFile:
     data = json.load(jsonFile)
+
 main(data)
