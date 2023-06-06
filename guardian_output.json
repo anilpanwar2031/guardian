@@ -6,9 +6,10 @@
             "PayerClaimId": "",
             "MemberNo": "120262917",
             "RenderingProviderFirstName": "DON",
-            "RenderingProviderLastName": "REES",
+            "RenderingProviderLastName": "BOREN",
             "PatientName": "EDMUND GROVER",
             "PlanType": "",
+            "PlanNumber": "00558774",
             "RenderingProviderID": "",
             "PayerPaid": "",
             "RecordID": "",
@@ -23,9 +24,10 @@
             "PayerClaimId": "",
             "MemberNo": "120320346",
             "RenderingProviderFirstName": "DON",
-            "RenderingProviderLastName": "REES",
+            "RenderingProviderLastName": "BOREN",
             "PatientName": "ANDREW CASEY",
             "PlanType": "",
+            "PlanNumber": "00581682",
             "RenderingProviderID": "",
             "PayerPaid": "",
             "RecordID": "",
@@ -42,6 +44,9 @@
             "Relationship": "SON",
             "ClaimId": "36343F13200",
             "PatientAccount": "120262917",
+            "PlanNumber": "00558774",
+            "EmployeeName": "GEOFFREY GROVER",
+            "PlanHolder": "VARO MONEY, INC.",
             "TransactionFee": "",
             "url": "",
             "Notes": "AN AETNA DENTAL ACCESS PARTICIPATING DENTIST HAS BEEN UTILIZED 4. The treatment plan does not meet the clinical criteria (which is established based on the patient's age) for coverage of general anesthesia or sedation. Benefits are based on the use of a Preferred Contracted Dentist.",
@@ -66,7 +71,7 @@
             "EFT_CheckNumber": "187857316",
             "PaidByOtherInsurance": "$0.00",
             "TotalBenefitPaid": "$ 241.20",
-            "Patientrep": "$105.80",
+            "PatientResp": "$105.80",
             "TotalBenfitPayable": "$241.20",
             "HigherAllowable": "$318.00",
             "PPGridViewId": "",
@@ -85,6 +90,9 @@
             "Relationship": "SON",
             "ClaimId": "36347F13200",
             "PatientAccount": "120320346",
+            "PlanNumber": "00581682",
+            "EmployeeName": "ANDREW CASEY",
+            "PlanHolder": "GOENGINEER, INC.",
             "TransactionFee": "",
             "url": "",
             "Notes": "AN AETNA DENTAL ACCESS PARTICIPATING DENTIST HAS BEEN UTILIZED 6. The dental plan covers bitewing radiographic images only once in any 12 consecutive month period, up to a maximum of four films or a set of 7-8 vertical films, in one visit. Benefits are based on the use of a Preferred Contracted Dentist. You have used   $0.00 of your personal Maximum Rollover Account.  $700.00 remains in your account",
@@ -109,7 +117,7 @@
             "EFT_CheckNumber": "187857316",
             "PaidByOtherInsurance": "$0.00",
             "TotalBenefitPaid": "$ 110.00",
-            "Patientrep": "$30.00",
+            "PatientResp": "$30.00",
             "TotalBenfitPayable": "$110.00",
             "HigherAllowable": "$110.00",
             "PPGridViewId": "",
@@ -135,6 +143,8 @@
             "DeductibleAmount": "",
             "CoveragePercent": "50.00",
             "BenefitAmount": "90%",
+            "PatientResp": "",
+            "Adjustments": "",
             "RecordId": 1
         },
         {
@@ -148,6 +158,8 @@
             "DeductibleAmount": "",
             "CoveragePercent": "90%",
             "BenefitAmount": "62.10",
+            "PatientResp": "",
+            "Adjustments": "",
             "RecordId": 2
         },
         {
@@ -160,7 +172,9 @@
             "CoveredCharge": "149.00",
             "DeductibleAmount": "",
             "CoveragePercent": "90%",
-            "BenefitAmount": "134.10"
+            "BenefitAmount": "134.10",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "4 D9230/Analgesia/N20",
@@ -172,7 +186,9 @@
             "CoveredCharge": "0.00",
             "DeductibleAmount": "",
             "CoveragePercent": "90%",
-            "BenefitAmount": "0.00"
+            "BenefitAmount": "0.00",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "1 D0120/Periodic Eval",
@@ -184,7 +200,9 @@
             "CoveredCharge": "27.00",
             "DeductibleAmount": "",
             "CoveragePercent": "100%",
-            "BenefitAmount": "27.00"
+            "BenefitAmount": "27.00",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "2 D0240/Occlusal Image",
@@ -196,7 +214,9 @@
             "CoveredCharge": "14.00",
             "DeductibleAmount": "",
             "CoveragePercent": "100%",
-            "BenefitAmount": "14.00"
+            "BenefitAmount": "14.00",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "3 D0240/Occlusal Image",
@@ -208,7 +228,9 @@
             "CoveredCharge": "14.00",
             "DeductibleAmount": "",
             "CoveragePercent": "100%",
-            "BenefitAmount": "14.00"
+            "BenefitAmount": "14.00",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "4 D1120/Child Cleaning",
@@ -220,7 +242,9 @@
             "CoveredCharge": "39.00",
             "DeductibleAmount": "",
             "CoveragePercent": "100%",
-            "BenefitAmount": "39.00"
+            "BenefitAmount": "39.00",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "5 D1206/Fluoride Varn",
@@ -232,7 +256,9 @@
             "CoveredCharge": "16.00",
             "DeductibleAmount": "",
             "CoveragePercent": "100%",
-            "BenefitAmount": "16.00"
+            "BenefitAmount": "16.00",
+            "PatientResp": "",
+            "Adjustments": ""
         },
         {
             "SubmittedADACodesDescription": "6 D0274/Bitewing - 4",
@@ -244,7 +270,9 @@
             "CoveredCharge": "0.00",
             "DeductibleAmount": "",
             "CoveragePercent": "100%",
-            "BenefitAmount": "0.00"
+            "BenefitAmount": "0.00",
+            "PatientResp": "",
+            "Adjustments": ""
         }
     ]
 }

@@ -138,7 +138,7 @@ def get_master_details(file_path, texts):
             tables = page.extract_tables()
             t = 1
             for table in tables:
-                print("\n")
+
                 t += 1
                 r = 1
                 for row in table[:-1]:
@@ -148,9 +148,9 @@ def get_master_details(file_path, texts):
                         text = row[0]
                         claimnumber = text.split('Claim Number: ')[1].split(' ')[0]
                         patientaccountno = text.split('Patient Account No.:')[1].split(' ')[0]
-                        plannumber = text.split('Plan Number:')[1].split(' ')[0]
+                        plannumber = text.split('Plan Number:')[1].split(' ')[0].split('\n')[0]
                         patientname = text.split('Patient Name: ')[1].split('Employee Name')[0].strip()
-                        employeename = text.split('Employee Name: ')[1].split('Relationship')[0]
+                        employeename = text.split('Employee Name: ')[1].split('Relationship')[0].strip()
                         relationship = text.split('Relationship: ')[1].split('Planholder:')[0].replace('\n', '')
                         planholder = text.split('Planholder: ')[1]
 
@@ -159,6 +159,9 @@ def get_master_details(file_path, texts):
                         patient_dict['Relationship'] = relationship
                         patient_dict['ClaimId'] = claimnumber
                         patient_dict['PatientAccount'] = patientaccountno
+                        patient_dict['PlanNumber'] = plannumber
+                        patient_dict['EmployeeName'] = employeename
+                        patient_dict['PlanHolder'] = planholder
                         patient_dict['TransactionFee'] = ''
                         patient_dict['url'] = ''
                         patient_dict['Notes'] = ''
@@ -188,7 +191,11 @@ def get_master_details(file_path, texts):
     return patients
 
 
-def get_details(file_path):
+def benfi(texts, a):
+    pass
+
+
+def get_details(file_path, texts):
     dict_list = tabula.read_pdf(file_path, pages='all')
 
     lst = []
@@ -201,10 +208,8 @@ def get_details(file_path):
                 new_name = f'columns{i + 1}'
                 new_columns_name[old_name] = new_name
                 tab = tab.rename(columns=new_columns_name)
-                a['B'] = "ABC"
-                t = tab.to_dict('records')
-                t.update(a)
-            # lst.append(tab.to_dict('records'))
+
+            lst.append(tab.to_dict('records'))
 
     temp_lst = []
     for i in range(len(lst)):
@@ -361,8 +366,14 @@ def get_details(file_path):
             new_dict['AltCode'] = str(new_dict['AltCode']).replace('nan', '')
         if str(new_dict['ToothNo']) == 'nan':
             new_dict['ToothNo'] = str(new_dict['ToothNo']).replace('nan', '')
+        a = new_dict['SubmittedADACodesDescription']
+
+        benf = benfi(texts, a)
+        new_dict.update({'PatientResp': '', 'Adjustments': ''})
+        print("AAAAAAA", new_dict)
         new_lst.append(new_dict)
     print("new_lst>>>>>>>>>>>>>", new_lst)
+
     return new_lst
     # for i in new_lst:
     #     data['PpEobClaimMaster'].append(i)
@@ -405,9 +416,10 @@ def getEftPatients(eobclaimmaster):
             "PayerClaimId": '',
             "MemberNo": p['PatientAccount'],
             "RenderingProviderFirstName": p['Provider'].split(' ')[0].strip(),
-            "RenderingProviderLastName": p['Provider'].split(' ')[1].strip(),
+            "RenderingProviderLastName": p['Provider'].split(' ')[-1].strip(),
             "PatientName": p['PatientName'],
             "PlanType": "",
+            "PlanNumber" : p['PlanNumber'],
             "RenderingProviderID": "",
             "PayerPaid": "",
             "RecordID": "",
@@ -425,7 +437,7 @@ def main():
     file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian.pdf'
     texts = getAllTexts(file_path)
     eobclaimmaster = get_master_details(file_path, texts)
-    eobclaimdetail = get_details(file_path)
+    eobclaimdetail = get_details(file_path, texts)
     eftpatients = getEftPatients(eobclaimmaster)
 
     json_data = {
@@ -455,4 +467,3 @@ data = main()
 
 with open('guardian_output.json', 'w', encoding='utf-8') as file:
     file.write(json.dumps(data, indent=4))
-pprint(data)

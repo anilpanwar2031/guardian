@@ -1,0 +1,74 @@
+{
+  "InputParameters": {
+    "PayorName": "Guardian",
+    "PayorId": 2,
+    "ClientId": "857dc9bd-c432-482d-af84-437a48ccecfe",
+    "AppName": "Payment Processing",
+    "ClinicDetails": {
+      "SearchKey": [
+        "1621"
+      ]
+    },
+    "RcmClaimNumber": "38471",
+    "RcmClinicId": "d762b4f3-aa84-406c-bed3-60b087cc5696",
+    "file": "RcmEobClaimMaster",
+    "ScheduleId": 0
+  },
+  "PatientData": [
+    {
+      "EligibilityVerificationId": 13490,
+      "PatientId": "11111",
+      "AppointmentId": "46862",
+      "AppointmentDateTime": "2023-05-09T08:45:00+00:00",
+      "LastName": "Wright",
+      "FirstName": "Ivy",
+      "BirthDate": "12/02/2020",
+      "Relationship": "Child",
+      "PatientMemberId": "939024388",
+      "SubscriberId": "939024388",
+      "SubscriberFirstName": "Ivy",
+      "SubscriberLastName": "Wright",
+      "SubscriberBirthDate": "12/02/2020",
+      "ClinicServerId": "f7df99a8-bb69-22ca-7ad9-5219fe33ffba",
+      "ClinicNum": "0"
+    }
+  ],
+  "Login": {
+    "Url": "https://signin.guardianlife.com/signin",
+    "LoginId": "payoraccess1",
+    "Password": "Changeme2!",
+    "OtpRequired": false,
+    "OtpEmail": "TODO"
+  },
+  "Xpaths": [
+    {
+      "Id": 162,
+      "ClientId": null,
+      "EligibilityPayorInfoId": 2,
+      "DataContextId": 196,
+      "XPath": "{\"Click\": null, \"Xpaths\": [{\"UsernameXpath\": \"//input[@id='username']\", \"AdditionalInfo\": {\"StepsAfterUsernameInput\": {\"Click\": [\"//button[@id='signin-button']\"]}}, \"PasswordXpath\": \"//input[@id='current-password']\", \"LoginButtonXpath\": \"//button[@id='signin-button']\", \"OtpInputXpath\": \"//*[@id='mfaSecurityCode']\", \"OtpSubmitXpath\": \"//*[@id='mfaSignInButton']\", \"PreSteps\": [], \"PostSteps\": [\"//*[@id='mfaChallengeButton']\"], \"OtpXpath\": \"\"}]}",
+      "IsActive": true,
+      "DataContextName": "EligibilityLogin",
+      "ProductCategoryId": 2
+    },
+    {
+      "Id": 163,
+      "ClientId": null,
+      "EligibilityPayorInfoId": 2,
+      "DataContextId": 202,
+      "XPath": "{\"Xpaths\": [{\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"ClaimNumber\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[1]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"Patient\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[2]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"GroupID\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[3]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"DateOfService \"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[4]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"PaidDate\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[5]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"Check\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[6]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"Status\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td/div[contains(@title,'claim')]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"SubmittedCharges\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[8]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"Paid\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[9]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"Letters\"}, \"xpath\": \"//table[contains(@class,'claims-table')]//td[11]\"}, {\"AdditonalInfo\": {\"Click\": [\"//div[@class='custom-icon-pdf']\"], \"fileds\": [], \"windowChange\": 1, \"window_print\": false}, \"xpath\": \"//*[contains(text(),'Open')]\"}, {\"AdditonalInfo\": {\"Click\": [], \"fileds\": [], \"windowChange\": 1, \"GetPdfFromBase64\": {\"Sleep\": 20, \"Script\": \"return document.getElementsByTagName('embed')[0].getAttribute('src').replace('data:application/pdf;base64,','')\"}}, \"xpath\": \"/htm/gfdd/dfd\"}]}",
+      "IsActive": true,
+      "DataContextName": "RcmEobClaimMaster",
+      "ProductCategoryId": 2
+    }
+  ],
+  "SearchParameters": [
+    {
+      "Id": 47,
+      "EligibilityPayorInfoId": 2,
+      "JsonSettings": "{\"Search\":{\"Settings\":{\"PreSteps\":{\"Clicks\":[\"//a[@id='subnav-anchor']\",\"//a[@id='startNewSearch']\",\"//*[@id='radiobutton-group']/div[2]/label\"],\"AdditonalInfo\":{\"aftersleep\":2}},\"SearchButtonXpath\":\"//button[contains(@id,'search')]\",\"PostSteps\":{\"Clicks\":[],\"AdditonalInfo\":{\"aftersleep\":5}}}}}",
+      "IsActive": true,
+      "ProductCategoryId": 2
+    }
+  ]
+}
