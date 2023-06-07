@@ -15,7 +15,7 @@ import tabula
 def main(data):
     data['RcmEobClaimDetail'] = []
     # file_path = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10)) + ".pdf"
-    file_path = "guardian.pdf"
+    file_path = "guardian2.pdf"
     print(file_path)
     # input_file = data["RcmEobClaimMaster"][0]["url"].replace("%20", " ")
     # print("input_file>>>>>>>>>>>>>>", input_file)

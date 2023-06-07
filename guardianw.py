@@ -30,7 +30,6 @@ def getAllTexts(file_path):
         # Create a PdfReader object
         pdf = PdfReader(file)
 
-        # Extract text from each page
         for page in pdf.pages:
             text = page.extract_text()
             texts = texts + text + ' '
@@ -43,8 +42,12 @@ def getRemarks(texts, claimnumber):
 
     if '10 Hudson' in remarks:
         remarks = remarks.split('10 Hudson')[0]
-    else:
+    if 'SCHEDULE' in remarks:
+        remarks = remarks.split('SCHEDULE')[0] + 'SCHEDULE'
+    if 'Comments' in remarks:
         remarks = remarks.split('Comments:')[0]
+
+    print("RRMMMMM", claimnumber, remarks)
 
     return remarks.replace('\n', ' ').replace("  ", " ").strip()
 
@@ -160,11 +163,10 @@ def get_master_details(file_path, texts):
                         patient_dict['ClaimId'] = claimnumber
                         patient_dict['PatientAccount'] = patientaccountno
                         patient_dict['PlanNumber'] = plannumber
-                        patient_dict['EmployeeName'] = employeename
-                        patient_dict['PlanHolder'] = planholder
+                        patient_dict['SubscriberName'] = employeename
+                        patient_dict['PlanType'] = planholder
                         patient_dict['TransactionFee'] = ''
                         patient_dict['url'] = ''
-                        patient_dict['Notes'] = ''
                         patient_dict['PayerClaimID'] = ''
                         patient_dict['TotalAmount'] = ''
                         patient_dict['ClaimStatus'] = ''
@@ -187,6 +189,25 @@ def get_master_details(file_path, texts):
                         patient_dict['RenderingProviderID'] = ''
 
                         patients.append((patient_dict))
+
+    pl = len(patients)
+    indexlist = []
+    for i in range(pl):
+        try:
+            for j in range(i + 1, pl + 1):
+                try:
+                    if patients[i]["ClaimId"] == patients[j]["ClaimId"]:
+                        indexlist.append(j)
+                except:
+                    pass
+        except:
+            pass
+
+    indexlist.sort(reverse=True)
+
+    for index in indexlist:
+        del patients[index]
+
 
     return patients
 
@@ -366,10 +387,19 @@ def get_details(file_path, texts):
             new_dict['AltCode'] = str(new_dict['AltCode']).replace('nan', '')
         if str(new_dict['ToothNo']) == 'nan':
             new_dict['ToothNo'] = str(new_dict['ToothNo']).replace('nan', '')
-        a = new_dict['SubmittedADACodesDescription']
 
-        benf = benfi(texts, a)
-        new_dict.update({'PatientResp': '', 'Adjustments': ''})
+        change_keys = [("DateOfService","ServiceDate"), ("SubmittedCharge","SubmittedCharges")]
+        for k in change_keys:
+            old_key = k[0]
+            new_key = k[1]
+            value = new_dict[old_key]
+            new_dict[new_key] = value
+            del new_dict[old_key]
+        proccode = new_dict['SubmittedADACodesDescription'].split(' ')[1].split('/')[0]
+        description = new_dict['SubmittedADACodesDescription'].split('/')[-1]
+        del new_dict['SubmittedADACodesDescription']
+        new_dict.update({'ProcCode': proccode, 'Description': description, 'PatientResp': '', 'Adjustments': '', 'OtherAdjustments':'',
+                         'Enrollee_ClaimID': '', 'PPGridViewId': ''})
         print("AAAAAAA", new_dict)
         new_lst.append(new_dict)
     print("new_lst>>>>>>>>>>>>>", new_lst)
@@ -404,7 +434,6 @@ def get_details(file_path, texts):
     # with open("newJson.json", "w") as jsonFile:
     #     json.dump(data, jsonFile, indent=4)
 
-    return 0
 
 
 def getEftPatients(eobclaimmaster):
@@ -418,7 +447,7 @@ def getEftPatients(eobclaimmaster):
             "RenderingProviderFirstName": p['Provider'].split(' ')[0].strip(),
             "RenderingProviderLastName": p['Provider'].split(' ')[-1].strip(),
             "PatientName": p['PatientName'],
-            "PlanType": "",
+            "PlanType": p['PlanType'],
             "PlanNumber" : p['PlanNumber'],
             "RenderingProviderID": "",
             "PayerPaid": "",
@@ -434,27 +463,27 @@ def getEftPatients(eobclaimmaster):
 
 def main():
     print("main 1")
-    file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian.pdf'
+    file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian2.pdf'
     texts = getAllTexts(file_path)
     eobclaimmaster = get_master_details(file_path, texts)
-    eobclaimdetail = get_details(file_path, texts)
-    eftpatients = getEftPatients(eobclaimmaster)
+    # eobclaimdetail = get_details(file_path, texts)
+    # eftpatients = getEftPatients(eobclaimmaster)
 
     json_data = {
-        'EFTPatients': eftpatients,
-        'PpEobClaimMaster': eobclaimmaster,
-        'PpEobClaimDetail': eobclaimdetail
+        # 'EFTPatients': eftpatients,
+        'PpEobClaimMaster': eobclaimmaster
+        # 'PpEobClaimDetail': eobclaimdetail
     }
 
-    for i, (claim1, claim2, claim3) in enumerate(zip(
-            json_data["EFTPatients"],
-            json_data["PpEobClaimMaster"],
-            json_data["PpEobClaimDetail"],
+    for i, (claim1,) in enumerate(zip(
+            # json_data["EFTPatients"],
+            json_data["PpEobClaimMaster"]
+            # json_data["PpEobClaimDetail"],
     ),
             start=1, ):
         claim1["RecordId"] = i
-        claim2["RecordId"] = i
-        claim3["RecordId"] = i
+        # claim2["RecordId"] = i
+        # claim3["RecordId"] = i
 
     return json_data
 
