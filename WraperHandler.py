@@ -225,6 +225,10 @@ def WraperHandler(InputParameters,data,scraped_data,patient,browser):
         if InputParameters['PayorName'] == "Aetna":
             from wrapers import aetnamaster
             scraped_data=aetnamaster.main(scraped_data)
+        if InputParameters['PayorName'] == "Guardian":
+            from wrapers import guardianw
+            scraped_data=guardianw.main(scraped_data)
+
 
         if InputParameters['PayorName'] == "Managed Care of North America- MCNA":
             from wrapers import mcna

@@ -12,7 +12,7 @@
   },
   "PatientData": [
     {
-      "number": "188350579"
+      "number": "188124783"
     }
   ],
   "Login": {
@@ -38,11 +38,11 @@
       "ClientId": null,
       "EligibilityPayorInfoId": 78,
       "DataContextId": 206,
-      "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"Status\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td/div[contains(@title,'claim')]!@number\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":\"SubmittedCharges\"},\"xpath\":\"//td[contains(text(),'%s')]/parent::tr/td[8]!@number\"},{\"AdditonalInfo\":{\"Click\":[\"//td[contains(text(),'%s')]/parent::tr/td/div[@class='custom-icon-pdf']!@number\",\"//*[contains(text(),'Open')]\"],\"fileds\":[],\"windowChange\":1,\"window_print\":false},\"xpath\":\"//*[contains(text(),'Open')]\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":[],\"windowChange\":1,\"GetPdfFromBase64\":{\"Sleep\":20,\"Script\":\"return document.getElementsByTagName('embed')[0].getAttribute('src').replace('data:application/pdf;base64,','')\"}},\"xpath\":\"/htm/gfdd/dfd\"}]}",
+      "XPath": "{\"Xpaths\":[{\"AdditonalInfo\":{\"Click\":[\"//td[contains(text(),'%s')]/parent::tr/td[10]!@number\"],\"fileds\":[]},\"xpath\":\"//td/td/tr[@id='AaBb']\"},{\"AdditonalInfo\":{\"Click\":[],\"fileds\":[]},\"xpath\":\"//bolotararaa\"}]}",
       "IsActive": true,
       "DataContextName": "EFTPatients",
       "ProductCategoryId": 6
-    }
+}
   ],
   "SearchParameters": [
     {
@@ -54,3 +54,4 @@
     }
   ]
 }
+

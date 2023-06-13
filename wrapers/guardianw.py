@@ -62,7 +62,7 @@ def getBenefit(texts, claimnumber):
 
     benefit_dict['PaidByOtherInsurance'] = '$' + benefit.split('PAID BY OTHER INSURANCE')[1].split('ADJUSTMENTS')[0].replace('\n', '').split('$')[1]
     benefit_dict['TotalBenefitPaid'] = '$' + benefit.split('TOTAL BENEFIT PAID')[1].split('PATIENT')[0].replace('\n', '').split('$')[1]
-    benefit_dict['PatientResp'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
+    benefit_dict['TotalPatientResp'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
     benefit_dict['TotalBenfitPayable'] = benefit.split('PAID BY OTHER INSURANCE')[0].split('\n')[-2].strip()
     benefit_dict['HigherAllowable'] = '$' + benefit.split('BENEFIT SUMMARY')[1].split('HIGHER ALLOWABLE')[0].replace('\n', '').split('$')[1].strip()
     return benefit_dict, adjustments
@@ -444,7 +444,7 @@ def getEftPatients(eobclaimmaster):
         eftpatient_dict = {
             "SubscriberID": "",
             "ProviderClaimId": '',
-            "PayerClaimId": '',
+            "PayerClaimId": p['ClaimId'],
             "MemberNo": p['PatientAccount'],
             "RenderingProviderFirstName": p['Provider'].split(' ')[0].strip(),
             "RenderingProviderLastName": p['Provider'].split(' ')[-1].strip(),
@@ -513,11 +513,11 @@ def main(data):
     return json_data
 
 
-with open("wguardian_output.json", "r") as jsonFile:
-    data = json.load(jsonFile)
+# with open("wguardian_output.json", "r") as jsonFile:
+#     data = json.load(jsonFile)
 
 # data = main()
-
+#
 #
 # with open('guardian_output.json', 'w', encoding='utf-8') as file:
 #     file.write(json.dumps(data, indent=4))

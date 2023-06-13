@@ -171,7 +171,7 @@ def start(data,message_id,inputurl):
     #     return    
     
     if(InputParameters.get("PayorName")=="Guardian"):
-        sleep(100)
+        sleep(50)
     loginEndTime=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")  
     if InputParameters.get('ClinicDetails'):
         data_clinic=[json.loads(x['XPath']) for x in data['Xpaths'] if  x['DataContextName']=='ClinicSwitch']
@@ -203,6 +203,7 @@ def start(data,message_id,inputurl):
                 
     PatientData = data['PatientData']
     ScrapingXpaths_=[x for x in data_req['Xpaths'] if  x['DataContextName'] not in ['EligibilityLogin','ClinicSwitch'] ]
+    print("Print Scraping Xpath ", ScrapingXpaths_)
     for patient in PatientData:
         PatientSearchTimeStart=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         queries=json.loads(search_main)['Search']['Queries']
@@ -243,7 +244,7 @@ def start(data,message_id,inputurl):
             ScrapingTimeEnd=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
                      
             WraperStartTime =   datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S") 
-            with open("output.json","w") as f:
+            with open("goutput.json","w") as f:
                 f.write(json.dumps(scraped_data,indent=4))
             scraped_data  = WraperHandler(InputParameters,data,scraped_data,patient,browser)
  
@@ -310,8 +311,8 @@ def start(data,message_id,inputurl):
                 "ClientId": InputParameters['ClientId'],
                 "PayorId": InputParameters['PayorId'],
                 "AppName": InputParameters['AppName'],
-                "EligibilityVerificationId": patient['EligibilityVerificationId'],
-                "ClinicServerId": patient['ClinicServerId'],
+                "EligibilityVerificationId": patient.get('EligibilityVerificationId'),
+                "ClinicServerId": patient.get('ClinicServerId'),
                 'ETFNumber': patient.get('number'),
                 "ErrorMessage": "EFT not found",
                 "IsError":True,
@@ -353,10 +354,9 @@ def start(data,message_id,inputurl):
     browser.quit()
 
 
-
-
 def kickoff(message,message_id):
     start(message,message_id,"")
+
 
 d=json.loads(open("guardianInput.json","r").read())
 kickoff(d,"8a7f3sd254221edssd")

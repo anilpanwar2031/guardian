@@ -1,7 +1,6 @@
 import sys
 import os
 import uuid
-#
 
 current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
@@ -55,6 +54,8 @@ def main(data):
         columns3 = obj['columns3'].split()
         print(columns3)
         columns4 = obj['columns4'].split()
+
+
 
         if 'columns6' in obj:
             columns6 = str(obj['columns6']).split()
@@ -141,14 +142,14 @@ def main(data):
                 new_dict = {
                     'SubmittedADACodesDescription': obj["columns1"],
                     'AltCode': "",
-                    'ToothNo': obj['columns2'],
-                    'DateOfService': columns3[0],
-                    'SubmittedCharge': columns3[1],
-                    'ConsideredCharge': columns3[2],
-                    'CoveredCharge': columns3[3],
+                    'ToothNo': columns2[0],
+                    'DateOfService': columns2[1],
+                    'SubmittedCharge': columns3[0],
+                    'ConsideredCharge': columns3[1],
+                    'CoveredCharge': columns4[0],
                     'DeductibleAmount': "",
-                    'CoveragePercent': columns4[0],
-                    'BenefitAmount': str(columns4[1])
+                    'CoveragePercent': columns5[0],
+                    'BenefitAmount': str(columns5[1])
                 }
                 print("new_dict>>>>>>>>>>>>>>>", new_dict)
 
@@ -220,8 +221,6 @@ def main(data):
     with open("newJson.json", "w") as jsonFile:
         json.dump(data, jsonFile, indent=4)
 
-
 with open("output.json", "r") as jsonFile:
     data = json.load(jsonFile)
-
 main(data)
