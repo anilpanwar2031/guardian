@@ -62,7 +62,7 @@ def getBenefit(texts, claimnumber):
 
     benefit_dict['PaidByOtherInsurance'] = '$' + benefit.split('PAID BY OTHER INSURANCE')[1].split('ADJUSTMENTS')[0].replace('\n', '').split('$')[1]
     benefit_dict['TotalBenefitPaid'] = '$' + benefit.split('TOTAL BENEFIT PAID')[1].split('PATIENT')[0].replace('\n', '').split('$')[1]
-    benefit_dict['PatientResp'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
+    benefit_dict['TotalPatientResp'] = '$' + benefit.split('PATIENT')[1].split('TOTALS\nTOTAL BENEFIT')[0].replace('\n', '').split('$')[1].strip()
     benefit_dict['TotalBenfitPayable'] = benefit.split('PAID BY OTHER INSURANCE')[0].split('\n')[-2].strip()
     benefit_dict['HigherAllowable'] = '$' + benefit.split('BENEFIT SUMMARY')[1].split('HIGHER ALLOWABLE')[0].replace('\n', '').split('$')[1].strip()
     return benefit_dict, adjustments
@@ -169,7 +169,7 @@ def get_master_details(file_path, texts, url):
                         patient_dict['url'] = url
                         patient_dict['PayerClaimID'] = ''
                         patient_dict['TotalAmount'] = ''
-                        patient_dict['ClaimStatus'] = ''
+                        patient_dict['ClaimStatus'] = 'Processed'
                         patient_dict['RenderingProvider'] = ''
                         payee_address_details = get_basic_details(file_path)
                         notes = getRemarks(texts, claimnumber)
@@ -185,7 +185,7 @@ def get_master_details(file_path, texts, url):
                         patient_dict['PayerContact'] = '(800) 541-7846'
                         patient_dict['PayerID'] = ''
                         patient_dict['PaymentMethodCode'] = ''
-                        patient_dict['RecordID'] = ''
+                        patient_dict['RecordID'] = str(uuid.uuid4())
                         patient_dict['RenderingProviderID'] = ''
 
                         patients.append((patient_dict))
@@ -388,19 +388,19 @@ def get_details(file_path, texts):
         if str(new_dict['ToothNo']) == 'nan':
             new_dict['ToothNo'] = str(new_dict['ToothNo']).replace('nan', '')
 
-        # change_keys = [("DateOfService", "ServiceDate"), ("SubmittedCharge","SubmittedCharges"),
-        #                ("BenefitAmount", "PayableAmount"),("ConsideredCharge","ActualAllowed"), ("DeductibleAmount", "ContractualObligations")]
-        # for k in change_keys:
-        #     old_key = k[0]
-        #     new_key = k[1]
-        #     value = new_dict[old_key]
-        #     new_dict[new_key] = value
-        #     del new_dict[old_key]
+        change_keys = [("DateOfService", "ServiceDate"), ("SubmittedCharge","SubmittedCharges"),
+                       ("BenefitAmount", "PayableAmount"),("ConsideredCharge","ActualAllowed"), ("DeductibleAmount", "ContractualObligations")]
+        for k in change_keys:
+            old_key = k[0]
+            new_key = k[1]
+            value = new_dict[old_key]
+            new_dict[new_key] = value
+            del new_dict[old_key]
         proccode = new_dict['SubmittedADACodesDescription'].split(' ')[1].split('/')[0]
         description = new_dict['SubmittedADACodesDescription'].split('/')[-1]
         del new_dict['SubmittedADACodesDescription']
         new_dict.update({'ProcCode': proccode, 'Description': description, 'PatientResp': '', 'Adjustments': '', 'OtherAdjustments':'',
-                         'Enrollee_ClaimID': '', 'PPGridViewId': '', 'RemarkCodes':'', 'PayerInitiatedReductions':'', "RecordID" :str(uuid.uuid4())})
+                         'Enrollee_ClaimID': '', 'PPGridViewId': '', 'RemarkCodes':'', 'PayerInitiatedReductions':'',"EFT_CheckNumber":"","PPTransPayorListID":"", "RecordID" : str(uuid.uuid4())})
         print("AAAAAAA", new_dict)
 
         new_lst.append(new_dict)
@@ -444,7 +444,7 @@ def getEftPatients(eobclaimmaster):
         eftpatient_dict = {
             "SubscriberID": "",
             "ProviderClaimId": '',
-            "PayerClaimId": '',
+            "PayerClaimId": p['ClaimId'],
             "MemberNo": p['PatientAccount'],
             "RenderingProviderFirstName": p['Provider'].split(' ')[0].strip(),
             "RenderingProviderLastName": p['Provider'].split(' ')[-1].strip(),
@@ -454,8 +454,8 @@ def getEftPatients(eobclaimmaster):
             "PlanType": p['PlanType'],
             "PlanNumber" : p['PlanNumber'],
             "RenderingProviderID": "",
-            "PayerPaid": "",
-            "RecordID": "",
+            "PayerPaid": p['TotalAmount'],
+            "RecordID": str(uuid.uuid4()),
             "PPTransPayorListID": "",
             "ClientId": "",
             "EligibilityVerificationId": "44",
@@ -484,11 +484,14 @@ def filedownload_(url):
     return file_path
 
 
-def main(data):
-    url = data["EFTPatients"][0]["url"]
+def main():
+    # url = data["EFTPatients"][0]["url"]
+
+    url = "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Guardian/8EMBI63TTJ/8a7f3sd254221edssd/main.pdf"
+
     print("main 1")
-    # file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian1.pdf'
-    file_path = filedownload_(url.replace("%20", " "))
+    file_path = 'C:\\guardian\\SD%20Payor%20Scraping\\guardian.pdf'
+    # file_path = filedownload_(url.replace("%20", " "))
     texts = getAllTexts(file_path)
     eobclaimmaster = get_master_details(file_path, texts, url)
     eobclaimdetail = get_details(file_path, texts)
@@ -500,15 +503,15 @@ def main(data):
         'PpEobClaimDetail': eobclaimdetail
     }
 
-    # for i, (claim1,claim2,claim3) in enumerate(zip(
-    #         json_data["EFTPatients"],
-    #         json_data["PpEobClaimMaster"],
-    #         json_data["PpEobClaimDetail"]
-    # ),
-    #         start=1, ):
-    #     claim1["RecordId"] = i
-    #     claim2["RecordId"] = i
-    #     claim3["RecordId"] = i
+    for i, (claim1,claim2,claim3) in enumerate(zip(
+            json_data["EFTPatients"],
+            json_data["PpEobClaimMaster"],
+            json_data["PpEobClaimDetail"]
+    ),
+            start=1, ):
+        claim1["RecordId"] = i
+        claim2["RecordId"] = i
+        claim3["RecordId"] = i
 
     return json_data
 
@@ -516,8 +519,8 @@ def main(data):
 with open("wguardian_output.json", "r") as jsonFile:
     data = json.load(jsonFile)
 
-# data = main()
+data = main()
 
-#
-# with open('guardian_output.json', 'w', encoding='utf-8') as file:
-#     file.write(json.dumps(data, indent=4))
+
+with open('guardian_output.json', 'w', encoding='utf-8') as file:
+    file.write(json.dumps(data, indent=4))
