@@ -1,0 +1,94 @@
+{
+    "InputParameters": {
+        "PayorName": "Delta Dental Wyoming",
+        "PayorId": 260,
+        "ClientId": "88b80500-d5a9-4c40-a753-34e43695c69e",
+        "AppName": "Eligibility",
+        "WebsiteId": "WYOMING_001",
+        "ProcCodes": [
+            "D0120",
+            "D0140",
+            "D0150",
+            "D0170",
+            "D0210",
+            "D0220",
+            "D0230",
+            "D0240",
+            "D0272",
+            "D0274",
+            "D0330",
+            "D1110",
+            "D1120",
+            "D1206",
+            "D1208",
+            "D1351",
+            "D1354",
+            "D1516",
+            "D1517",
+            "D2140",
+            "D2150",
+            "D2160",
+            "D2161",
+            "D2391",
+            "D2392",
+            "D2393",
+            "D2394",
+            "D2930",
+            "D2933",
+            "D2934",
+            "D3220",
+            "D7140",
+            "D9110",
+            "D9230"
+        ],
+        "ScheduleId": 0
+    },
+    "PatientData": [
+        {
+            "EligibilityVerificationId": 112465,
+            "PatientId": "58948",
+            "AppointmentId": "287189",
+            "AppointmentDateTime": "2023-08-21T10:49:34.24+00:00",
+            "LastName": "JACOBS",
+            "FirstName": "ACE",
+            "BirthDate": "08/18/2014",
+            "Relationship": "Child",
+            "PatientMemberId": "994559443",
+            "SubscriberId": "994559443",
+            "SubscriberFirstName": "Tabbitha",
+            "SubscriberLastName": "Anderson",
+            "SubscriberBirthDate": "09/06/1981",
+            "ClinicServerId": "8d9d8527-8ee6-4697-8f41-4415ca6a26c0",
+            "ClinicNum": "2"
+        }
+    ],
+    "Login": {
+        "Url": "https://www.deltadentalwy.org/Dentist",
+        "LoginId": "Payoraccess",
+        "Password": "BPKtech@123",
+        "OtpRequired": false,
+        "OtpEmail": "TODO"
+    },
+    "Xpaths": [
+        {
+            "XPath": "{\"DataContextId\": \"1\", \"DataContextName\": \"EligibilityLogin\", \"Click\": null, \"Xpaths\": [{\"UsernameXpath\": \"//input[contains(@id,'txtEmail_I')]\", \"PasswordXpath\": \"//input[contains(@id,'txtPassword_I')]\", \"LoginButtonXpath\": \"//button[contains(@id,'btnSubmit')]\", \"OtpInputXpath\": \"\", \"OtpSubmitXpath\": \"\", \"PreSteps\": [], \"PostSteps\": [], \"OtpXpath\": \"\"}]}",
+            "DataContextName": "EligibilityLogin"
+        },
+        {
+            "XPath": "{\"Xpaths\": [{\"AdditonalInfo\": {\"Click\": [], \"fileds\": \"name\", \"waitTime\": 0}, \"xpath\": \"//gofu//xpath\"}]}",
+            "DataContextName": "EligibilityPatientVerification"
+        },
+        {
+            "XPath": "{\"MultiplElements\": {\"Searchlist\": [\"00150\", \"00120\", \"00140\", \"00170\", \"9110\", \"00220\", \"00230\", \"00272\", \"00274\", \"00210\", \"00330\", \"00240\", \"1110\", \"1120\", \"1206\", \"1208\", \"1351\", \"1354\", \"1516\", \"1517\", \"2140\", \"2150\", \"2160\", \"2161\", \"2391\", \"2392\", \"2393\", \"2394\", \"7140\", \"3220\", \"2930\", \"2933\", \"2934\", \"9230\"], \"action\": \"Sendkeys\", \"InputElementsXpath\": \"//*[@id='SubscriberPlanDetailsGrid_DXSE_I']\", \"SearchButtonXpath\": \"//button[@type='submit']\"}, \"Xpaths\": [{\"AdditonalInfo\": {\"Click\": [], \"fileds\": [\"ProcCode\", \"ProcedureDescription\", \"FrequencyAndLimitations\", \"WaitPeriod\", \"DeltaPays\", \"MemberPays\", \"LastDateofService\"]}, \"xpath\": \"//*[@id='SubscriberPlanDetailsGrid_DXMainTable']\"}, {\"AdditonalInfo\": {\"Click\": [\"//*[@id='SubscriberPlanDetailsGrid_DXSE_B-100Img']\"], \"fileds\": []}, \"xpath\": \"\"}]}",
+            "DataContextName": "EligibilityBenefits"
+        }
+    ],
+    "SearchParameters": [
+        {
+            "Id": 132,
+            "EligibilityPayorInfoId": 260,
+            "JsonSettings": "{\"Search\": {\"Settings\": {\"PreSteps\": {\"Clicks\": [\"//h4[contains(text(),'Benefits and Eligibility')]//following-sibling::div//div//a[contains(@class,'iconLink')]\"], \"AdditonalInfo\": {\"aftersleep\": 2}}, \"SearchButtonXpath\": \"(//*[contains(@id,'ButtonDetailsSubmit')])\", \"PostSteps\": {\"Clicks\": [], \"AdditonalInfo\": {\"aftersleep\": 10}}, \"SearchFilter\": {}}, \"Queries\": [{\"Data\": \"SubscriberId\", \"Xpath\": \"//input[contains(@id,'Members_Member1_txtSubscriberID_I')]\"}, {\"Data\": \"BirthDate\", \"Xpath\": \"//input[contains(@id,'Members_Member1_dePatientDateOfBirth_I')]\", \"PostClicks\": [\"(//input[contains(@id,'btnpdfDownload')])[1]\"], \"AfterClickWait\": 10}, {\"PreClicks\": {\"Clicks\": [\"//*[@id='pnlBenefitsAndEligibilitySearch_T1T']\"]}, \"Data\": \"SubscriberId\", \"Xpath\": \"//*[@id='ctl00_MainContent_RailProviderBenefitsAndEligibility_pnlBenefitsAndEligibilitySearch_SubscriberPlanDetailsRail_txtSubscriberID_I']\"}, {\"Data\": \"BirthDate\", \"Xpath\": \"//*[@id='ctl00_MainContent_RailProviderBenefitsAndEligibility_pnlBenefitsAndEligibilitySearch_SubscriberPlanDetailsRail_dePatientDateOfBirth_I']\"}]}}",
+            "IsActive": true
+        }
+    ]
+}
