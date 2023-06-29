@@ -243,8 +243,11 @@ def start(data,message_id,inputurl):
                 
             ScrapingTimeEnd=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
                      
-            WraperStartTime =   datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S") 
-            with open("goutput.json","w") as f:
+            WraperStartTime =   datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+
+            filename = patient.get('number')
+
+            with open(f"{filename}_output.json","w") as f:
                 f.write(json.dumps(scraped_data,indent=4))
             scraped_data  = WraperHandler(InputParameters,data,scraped_data,patient,browser)
  
@@ -283,7 +286,7 @@ def start(data,message_id,inputurl):
                     data_= [scraped_data[i]]
                 else:
                     data_=scraped_data[i]
-            with open("wrapper.json", "w") as f:
+            with open(f"{filename}_wrapper.json", "w") as f:
                 f.write(json.dumps(scraped_data,indent=4))
             final_data = {
             "ClientId": InputParameters['ClientId'],
@@ -358,5 +361,5 @@ def kickoff(message,message_id):
     start(message,message_id,"")
 
 
-d=json.loads(open("aaa.json","r").read())
+d=json.loads(open("guardianInput.json","r").read())
 kickoff(d,"8a7f3sd254221edssd")

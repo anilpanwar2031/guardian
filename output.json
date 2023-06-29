@@ -1,14 +1,9 @@
 {
-    "PpEobClaimMaster": [
+    "EFTPatients": [
         {
-            "EFTCheckNumber": "Payment IDs:  823093000136383",
-            "tinpin": "PIN: 6038935    TIN: E821594771",
-            "PaidProviderName": "CHILDREN'S DENTAL AT PRESTON TRAIL, PC",
-            "ProviderID": "E821594771",
-            "EobDate": "04/03/2023",
-            "EftSettlementDate": "04/06/2023",
-            "TotalAmount": "$2075.00",
-            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Aetna/VF9IQ0AD9H/8a7f3sd254221edssd/YourReport.pdf"
+            "Status": "Processed",
+            "SubmittedCharges": "$77.00",
+            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Guardian/PQ7KUGB0TP/8a7f3sd254221edssd/main.pdf"
         }
     ]
 }
