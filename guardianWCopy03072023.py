@@ -255,96 +255,300 @@ def get_claimnumber(eobclaimmaster):
     return claims
 
 
-def extract_text_coordinates(file_path):
-    text_list = []
-    with pdfplumber.open(file_path) as pdf:
-        # Iterate through each page of the PDF
-        for page_number in range(len(pdf.pages)):
-            page = pdf.pages[page_number]
-            page_number = page_number + 1
-            # Extract the text content and its coordinates
-            for element in page.extract_words(x_tolerance=1, y_tolerance=1, keep_blank_chars=True):
-                text_dict = {}
-                text = element["text"]
-                x, y = element["x0"], element["top"]
-
-                text_cord = f"Page {page_number + 1}: Text: {text} Coordinates: X={x}, Y={y}"
-                text_dict.update({'page': page_number, 'text': text, 'cordx': x, 'cordy': y})
-                text_list.append(text_dict)
-    return text_list
-
 def get_details(file_path, texts, eobclaimmaster):
-    text_list = extract_text_coordinates(file_path)
+    dict_list = tabula.read_pdf(file_path, pages='all')
 
-    dfs = []
-    x2 = 0
-    for text_d in text_list:
-        x = text_d['cordx']
-        if x2 < x:
-            x2 = text_d['cordx']
-    x2 = x2 + 20
-    for i in range(len(text_list)):
-        x1 = y1 = y2 = ''
-        if 'Line' in text_list[i]['text']:
-            print("Line", text_list[i]['text'])
-            x1 = text_list[i]['cordx']
-            y1 = text_list[i]['cordy']
-            for j in range(i, len(text_list)):
-                if 'BENEFIT SUMMARY' in text_list[j]['text']:
-                    print("Bene", text_list[j]['text'])
-                    page = int(text_list[j]['page'])
-                    y2 = text_list[j]['cordy']
-                    print(f"x1 = {x1}, y1 = {y1}, x2 = {x2}, y2 = {y2}")
-                    tabula_dfs = tabula.read_pdf(file_path, guess=False, pages=page, stream=True, encoding="utf-8",
-                                                 area=(y1, x1, y2, x2), multiple_tables=True)
-                    dfs.append(tabula_dfs[0])
+    lst = []
 
-                    break
+    claimlist = get_claimnumber(eobclaimmaster)
+    print("Claim lsittttt", claimlist)
+    for ind, tab in enumerate(dict_list):
+        claimn = claimlist[ind]
+        tab['Claim Number'] = claimn
 
-        tdfs = []
+        if any('Patient Name' in col for col in tab.columns):
+            new_columns_name = {}
+            for i in range(len(tab.columns)):
+                old_name = tab.columns[i]
+                new_name = f'columns{i + 1}'
+                new_columns_name[old_name] = new_name
 
-        for df in dfs:
-            df = df[~df.apply(lambda row: row.astype(str).str.contains('TOTALS', case=False)).any(axis=1)][1:]
-            df.rename(columns={'Date of': 'Date'}, inplace=True)
-            df.fillna('', inplace=True)
-            df.drop('Line', axis=1, inplace=True)
-            tdfs.append(df)
+                tab = tab.rename(columns=new_columns_name)
+            #         tabd = tab.to_dict('records')
+            lst.append(tab.to_dict('records'))
+        #     if len(lst) == 0:
+        if any('Claim Number' in col for col in tab.columns):
+            new_columns_name = {}
+            for i in range(len(tab.columns)):
+                old_name = tab.columns[i]
+                new_name = f'columns{i + 1}'
+                new_columns_name[old_name] = new_name
+                tab = tab.rename(columns=new_columns_name)
+            lst.append(tab.to_dict('records'))
 
-        new_dict = []
-        for td in tdfs:
-            tab = td.to_dict(orient='records')
-            for i in range(len(tab)):
-                new_dict.append(tab[i])
+    temp_lst = []
+    for i in range(len(lst)):
+        for obj in lst[i]:
+            if type(obj.get('columns1')) != float:
+                temp_lst.append(obj)
 
-        tab_dict = []
+    filtered_lst = []
+    for i in range(len(temp_lst)):
+        if not temp_lst[i]['columns1'].startswith('Patient Name') and not temp_lst[i]['columns1'].startswith(
+                'Planholder') and not temp_lst[i]['columns1'].startswith('Line Submitted') and not temp_lst[i][
+            'columns1'].startswith('No.'):
+            filtered_lst.append(temp_lst[i])
+        if not temp_lst[i]['columns1'].startswith('Claim Number') and not temp_lst[i]['columns1'].startswith(
+                'Planholder') and not temp_lst[i]['columns1'].startswith('Line Submitted') and not temp_lst[i][
+            'columns1'].startswith('No.'):
+            filtered_lst.append(temp_lst[i])
 
-        change_keys = [("Alt", "AltCode"), ("Tooth", "ToothNo"), ("Date", "ServiceDate"),
-                       ("Submitted.1", "SubmittedCharges"),
-                       ("Benefit", "PayableAmount"), ("Considered", "ActualAllowed"),
-                       ("Deductible", "ContractualObligations"), ("Covered", "CoveredCharge"),
-                       ("Coverage", "CoveragePercent")]
-        for d in new_dict:
-            for k in change_keys:
-                old_key = k[0]
-                new_key = k[1]
-                value = d[old_key]
-                d[new_key] = value
+    updated_list = remove_duplicate_dict(filtered_lst)
 
-            proccode = d['Submitted'].split('/')[0]
-            description = d['Submitted'].split('/')[-1]
+    ls = updated_list
+    for f in ls[:]:
+        for k in f.keys():
+            if 'Patient' in str(f[k]):
+                ls.remove(f)
 
-            d.update({'ProcCode': proccode, 'Description': description, 'PatientResp': '', 'Adjustments': '',
-                      'OtherAdjustments': '', 'PPGridViewId': 6, 'RemarkCodes': '', 'PayerInitiatedReductions': '',
-                      "EFT_CheckNumber": eobclaimmaster[0]['EFT_CheckNumber'],
-                      "PPTransPayorListID": "27e7c674-051c-40ec-b9ef-6c84f3a3dd1d", "RecordID": str(uuid.uuid4())})
+    print("filtered lsit", len(ls))
 
-            for k in change_keys:
-                del d[k[0]]
-            del d['Submitted']
-            print("D", d)
-            tab_dict.append(d)
+    new_lst = []
+    for obj in ls:
 
-    return tab_dict
+        new_dict = {}
+
+        columns2 = str(obj['columns2']).split()
+        columns3 = obj['columns3'].split()
+        columns4 = obj['columns4'].split()
+        lastk = list(obj.keys())
+        lastk = lastk[-1]
+        new_dict.update({'Enrollee_ClaimID': obj[lastk]})
+        keylist = list(obj.keys())[:-1]
+
+        if 'columns7' in keylist:
+            print("777777")
+            columns7 = str(obj['columns7']).split()
+            columns6 = obj['columns6'].split()
+            columns5 = obj['columns5'].split()
+
+            print("Lenght7", len(columns7))
+            print("columns7", columns7)
+            if len(columns7) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns7[0], 'CoveragePercent': columns7[1], 'BenefitAmount': columns7[2]})
+            if len(columns7) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0], 'BenefitAmount': columns7[1]})
+            if len(columns7) == 1:
+                new_dict.update({'BenefitAmount': columns7[0]})
+
+            print("Lenght6", len(columns6))
+            print("columns6", columns6)
+            if len(columns6) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns6[0], 'CoveragePercent': columns6[1], 'BenefitAmount': columns6[2]})
+            if len(columns6) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0], 'BenefitAmount': columns6[1]})
+            if len(columns6) == 1:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0]})
+
+            print("Lenght5", len(columns5))
+            print("columns5", columns5)
+            if len(columns5) == 3:
+                new_dict.update(
+                    {'SubmittedCharge': columns5[0], 'ConsideredCharge': columns5[1], 'CoveredCharge': columns5[2]})
+            if len(columns5) == 2:
+                new_dict.update({'ConsideredCharge': columns5[0], 'CoveredCharge': columns5[1]})
+            if len(columns5) == 1:
+                new_dict.update({'CoveredCharge': columns5[0]})
+
+            print("Lenght4", len(columns4))
+            print("columns4", columns4)
+            if len(columns4) == 3:
+                new_dict.update(
+                    {'DateOfService': columns4[0], 'SubmittedCharge': columns4[1], 'ConsideredCharge': columns4[2]})
+            if len(columns4) == 2:
+                new_dict.update({'DateOfService': columns4[0], 'SubmittedCharge': columns4[1]})
+            if len(columns4) == 1:
+                new_dict.update({'DateOfService': columns4[0]})
+
+            print("Lenght3", len(columns3))
+            print("columns3", columns3)
+            if len(columns3) == 1:
+                new_dict.update({'ToothNo': columns3[0]})
+
+            print("Lenght2", len(columns2))
+            print("columns2", columns2)
+            if len(columns2) == 1:
+                new_dict.update({'AltCode': columns2[0]})
+            new_dict.update({'SubmittedADACodesDescription': obj["columns1"]})
+
+        elif 'columns6' in keylist:
+            print("66666666")
+            columns6 = obj['columns6'].split()
+            columns5 = obj['columns5'].split()
+            print("Lenght6", len(columns6))
+            if len(columns6) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns6[0], 'CoveragePercent': columns6[1], 'BenefitAmount': columns6[2]})
+            if len(columns6) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0], 'BenefitAmount': columns6[1]})
+
+            print("Lenght5", len(columns5))
+            print("columns5", columns5)
+            if len(columns5) == 3:
+                new_dict.update(
+                    {'SubmittedCharge': columns5[0], 'ConsideredCharge': columns5[1], 'CoveredCharge': columns5[2]})
+            if len(columns5) == 2:
+                new_dict.update({'ConsideredCharge': columns5[0], 'CoveredCharge': columns5[1]})
+            if len(columns5) == 1:
+                new_dict.update({'CoveredCharge': columns5[0]})
+
+            print("Lenght4", len(columns4))
+            print("columns4", columns4)
+            if len(columns4) == 3:
+                new_dict.update(
+                    {'DateOfService': columns4[0], 'SubmittedCharge': columns4[1], 'ConsideredCharge': columns4[2]})
+            if len(columns4) == 2:
+                new_dict.update({'DateOfService': columns4[0], 'SubmittedCharge': columns4[1]})
+            if len(columns4) == 1:
+                new_dict.update({'DateOfService': columns4[0]})
+
+            print("Lenght3", len(columns3))
+            print("columns3", columns3)
+            if len(columns3) == 1:
+                new_dict.update({'ToothNo': columns3[0]})
+
+            print("Lenght2", len(columns2))
+            print("columns2", columns2)
+            if len(columns2) == 1:
+                new_dict.update({'AltCode': columns2[0]})
+            new_dict.update({'SubmittedADACodesDescription': obj["columns1"]})
+
+
+
+
+        elif 'columns5' in keylist:
+
+            print("555555")
+
+            columns5 = obj['columns5'].split()
+
+            if len(columns5) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns5[0], 'CoveragePercent': columns5[1], 'BenefitAmount': columns5[2]})
+
+            if len(columns5) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns5[0], 'BenefitAmount': columns5[1]})
+
+            print("Length 4", len(columns4))
+
+            print("value columns4", columns4)
+
+            if len(columns4) == 4:
+                new_dict.update(
+                    {'DateOfService': columns4[0], 'SubmittedCharge': columns4[1], 'ConsideredCharge': columns4[2],
+                     'CoveredCharge': columns4[3]})
+
+                print("NEW DICT", new_dict)
+
+            if len(columns4) == 3:
+                new_dict.update(
+                    {'SubmittedCharge': columns4[0], 'ConsideredCharge': columns4[1], 'CoveredCharge': columns4[2]})
+
+            if len(columns4) == 2:
+                new_dict.update({'ConsideredCharge': columns4[0], 'CoveredCharge': columns4[1]})
+
+            if len(columns4) == 1:
+                new_dict.update({'CoveredCharge': columns4[0]})
+
+            print("Length 3", len(columns3))
+
+            print("value columns3", columns3)
+
+            if len(columns3) == 3:
+                new_dict.update(
+                    {'DateOfService': columns3[0], 'SubmittedCharge': columns3[1], 'ConsideredCharge': columns3[2]})
+
+            if len(columns3) == 2:
+                new_dict.update({'SubmittedCharge': columns3[0], 'ConsideredCharge': columns3[1]})
+
+            if len(columns3) == 1:
+                new_dict.update({'ToothNo': columns3[0]})
+
+            print("Length 2 ", len(columns2))
+
+            print("value columns2", columns2)
+
+            if len(columns2) == 2:
+                new_dict.update({'ToothNo': columns2[0], 'DateOfService': columns2[1]})
+
+            if len(columns2) == 1:
+
+                if columns2[0] == 'nan':
+
+                    pass
+
+                else:
+
+                    new_dict.update({'ToothNo': columns2[0]})
+
+            new_dict.update({'SubmittedADACodesDescription': obj["columns1"], 'AltCode': ""})
+
+
+
+        elif 'columns4' in keylist:
+            if len(columns4) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns4[0], 'CoveragePercent': columns4[1], 'BenefitAmount': columns4[2]})
+            if len(columns4) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns4[0], 'BenefitAmount': columns4[1]})
+
+            if len(columns3) == 4:
+                new_dict.update(
+                    {'DateOfService': columns3[0], 'SubmittedCharge': columns3[1], 'ConsideredCharge': columns3[2],
+                     'CoveredCharge': columns3[3]})
+            if len(columns3) == 3:
+                new_dict.update(
+                    {'SubmittedCharge': columns3[0], 'ConsideredCharge': columns3[1], 'CoveredCharge': columns3[2]})
+            if len(columns3) == 2:
+                new_dict.update({'ConsideredCharge': columns3[0], 'CoveredCharge': columns3[1]})
+            if len(columns3) == 1:
+                new_dict.update({'CoveredCharge': columns3[0]})
+
+            if len(columns2) == 2:
+                new_dict.update({'ToothNo': columns2[0], 'DateOfService': columns2[1]})
+            if len(columns2) == 1:
+                new_dict.update({'ToothNo': columns2[0]})
+
+            new_dict.update({'SubmittedADACodesDescription': obj["columns1"], 'AltCode': ""})
+
+
+        change_keys = [("DateOfService", "ServiceDate"), ("SubmittedCharge", "SubmittedCharges"),
+                       ("BenefitAmount", "PayableAmount"), ("ConsideredCharge", "ActualAllowed"),
+                       ("DeductibleAmount", "ContractualObligations")]
+        for k in change_keys:
+            old_key = k[0]
+            new_key = k[1]
+            value = new_dict[old_key]
+            new_dict[new_key] = value
+            del new_dict[old_key]
+        proccode = new_dict['SubmittedADACodesDescription'].split(' ')[1].split('/')[0]
+        description = new_dict['SubmittedADACodesDescription'].split('/')[-1]
+        del new_dict['SubmittedADACodesDescription']
+        new_dict.update({'ProcCode': proccode, 'Description': description, 'PatientResp': '', 'Adjustments': '',
+                         'OtherAdjustments': '', 'PPGridViewId': 6, 'RemarkCodes': '', 'PayerInitiatedReductions': '',
+                         "EFT_CheckNumber": eobclaimmaster[0]['EFT_CheckNumber'],
+                         "PPTransPayorListID": "27e7c674-051c-40ec-b9ef-6c84f3a3dd1d", "RecordID": str(uuid.uuid4())})
+
+        for k in new_dict:
+            if new_dict[k] == 'nan':
+                new_dict[k] = ''
+
+        new_lst.append(new_dict)
+
+
+    return new_lst
 
 
 def getEftPatients(eobclaimmaster):
@@ -383,7 +587,7 @@ def main():
     url = "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Guardian/8EMBI63TTJ/8a7f3sd254221edssd/main.pdf"
 
     print("main 1")
-    file_path = 'guardian.pdf'
+    file_path = 'pdf\\2.pdf'
     # file_path = filedownload_(url.replace("%20", " "))
     texts = getAllTexts(file_path)
     eobclaimmaster = get_master_details(file_path, texts, url)
