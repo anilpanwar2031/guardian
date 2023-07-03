@@ -1,6 +1,3 @@
-import pdfplumber
-import tika
-tika.initVM()
 from pprint import pprint
 from Utilities.pdf_utils import *
 from FileDownload import Downloader
@@ -303,7 +300,67 @@ def get_details(file_path, texts, eobclaimmaster):
         new_dict.update({'Enrollee_ClaimID': obj[lastk]})
         keylist = list(obj.keys())[:-1]
 
-        if 'columns6' in keylist:
+
+        if 'columns7' in keylist:
+            print("777777")
+            columns7 = str(obj['columns7']).split()
+            columns6 = obj['columns6'].split()
+            columns5 = obj['columns5'].split()
+
+            print("Lenght7", len(columns7))
+            print("columns7", columns7)
+            if len(columns7) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns7[0], 'CoveragePercent': columns7[1], 'BenefitAmount': columns7[2]})
+            if len(columns7) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0], 'BenefitAmount': columns7[1]})
+            if len(columns7) == 1:
+                new_dict.update({'BenefitAmount': columns7[0]})
+
+            print("Lenght6", len(columns6))
+            print("columns6", columns6)
+            if len(columns6) == 3:
+                new_dict.update(
+                    {'DeductibleAmount': columns6[0], 'CoveragePercent': columns6[1], 'BenefitAmount': columns6[2]})
+            if len(columns6) == 2:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0], 'BenefitAmount': columns6[1]})
+            if len(columns6) == 1:
+                new_dict.update({'DeductibleAmount': '', 'CoveragePercent': columns6[0]})
+
+            print("Lenght5", len(columns5))
+            print("columns5", columns5)
+            if len(columns5) == 3:
+                new_dict.update(
+                    {'SubmittedCharge': columns5[0], 'ConsideredCharge': columns5[1], 'CoveredCharge': columns5[2]})
+            if len(columns5) == 2:
+                new_dict.update({'ConsideredCharge': columns5[0], 'CoveredCharge': columns5[1]})
+            if len(columns5) == 1:
+                new_dict.update({'CoveredCharge': columns5[0]})
+
+            print("Lenght4", len(columns4))
+            print("columns4", columns4)
+            if len(columns4) == 3:
+                new_dict.update(
+                    {'DateOfService': columns4[0], 'SubmittedCharge': columns4[1], 'ConsideredCharge': columns4[2]})
+            if len(columns4) == 2:
+                new_dict.update({'DateOfService': columns4[0], 'SubmittedCharge': columns4[1]})
+            if len(columns4) == 1:
+                new_dict.update({'DateOfService': columns4[0]})
+
+            print("Lenght3", len(columns3))
+            print("columns3", columns3)
+            if len(columns3) == 1:
+                new_dict.update({'ToothNo': columns3[0]})
+
+            print("Lenght2", len(columns2))
+            print("columns2", columns2)
+            if len(columns2) == 1:
+                new_dict.update({'AltCode': columns2[0]})
+            new_dict.update({'SubmittedADACodesDescription': obj["columns1"]})
+
+
+
+        elif 'columns6' in keylist:
             columns6 = obj['columns6'].split()
             columns5 = obj['columns5'].split()
 
@@ -335,7 +392,6 @@ def get_details(file_path, texts, eobclaimmaster):
             if len(columns2) == 1:
                 new_dict.update({'AltCode': ''})
             new_dict.update({'SubmittedADACodesDescription': obj["columns1"]})
-
 
 
 

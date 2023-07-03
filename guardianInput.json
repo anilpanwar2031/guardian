@@ -19,16 +19,8 @@
       "AppName": "Payment Processing",
       "PPTransPayorListID": "27e7c674-051c-40ec-b9ef-6c84f3a3dd1d",
       "EligibilityVerificationId": 19
-    },
-    {
-      "number": "188549785",
-      "ClinicServerId": "0909f68b-522e-4f3f-b1c9-fd595f59159e",
-      "PPGridViewId": 6,
-      "PayorId": 41,
-      "AppName": "Payment Processing",
-      "PPTransPayorListID": "27e7c674-051c-40ec-b9ef-6c84f3a3dd1d",
-      "EligibilityVerificationId": 19
     }
+
   ],
   "Login": {
     "Url": "https://signin.guardianlife.com/signin",
