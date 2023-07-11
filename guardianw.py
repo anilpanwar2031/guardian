@@ -374,9 +374,6 @@ def getEftPatients(eobclaimmaster):
     return eftpatientlist
 
 
-
-
-
 def main():
     # url = data["EFTPatients"][0]["url"]
 

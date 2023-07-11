@@ -1,0 +1,9 @@
+{
+    "EFTPatients": [
+        {
+            "Status": "Processed",
+            "SubmittedCharges": "$77.00",
+            "url": "https://sdppcontainerdevsa.blob.core.windows.net/pp-scrapper-ins-blob/Payment%20Processing/Guardian/E170FFCAGG/8a7f3sd254221edssd/main.pdf"
+        }
+    ]
+}
